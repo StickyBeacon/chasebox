@@ -1,19 +1,44 @@
 extends Node
 
-@onready var player :CharacterBody2D = $"../.."
-var input_dict = {"jump" = null,"shoot"= null,"left"= null,"right"= null,"up"= null,"down"= null}
+@onready var player :Player = $"../.."
+var _input_dict = {"jump" = null,"shoot"= null,"left"= null,"right"= null,"up"= null,"down"= null}
 
-var bullet_type = null
+var _bullet_type = preload("res://bullets/basic_bullet.tscn")
+var _aim_rot:float = 0
+const AIM_LERP_SPEED = 15
 
 
 func _ready() -> void:
-	var player_number = 1 if player.is_player_1 else 2
+	var _player_number = 1 if player.is_player_1 else 2
 	
-	for key in input_dict.keys():
-		input_dict[key] = key + str(player_number)
+	for key in _input_dict.keys():
+		_input_dict[key] = key + str(_player_number)
 
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed(_input_dict["shoot"]):
+		shoot()
+
+
+func _process(delta: float) -> void:
+	var _input_vector = Input.get_vector(_input_dict["left"],_input_dict["right"],_input_dict["up"],_input_dict["down"])
+	if _input_vector != Vector2.ZERO:
+		var target_rot = atan2(_input_vector.normalized().y,_input_vector.normalized().x)
+		_aim_rot = lerp_angle(_aim_rot,target_rot,delta*AIM_LERP_SPEED)
+		%AimCursor.rotation = _aim_rot
+		
+
+
+func shoot():
+	var _new_bullet = _bullet_type.instantiate()
+	get_tree().root.add_child(_new_bullet)
+	_new_bullet.position = player.global_position
+	_new_bullet.activate(player.get_player_id(), _aim_rot, player.velocity)
+	# -> rotate bullet according to _aim_rot
+	# -> Add trauma based on bullet strength
+	pass
 
 
 func change_bullet_type(bullet):
 	print("changed bullet type")
-	bullet_type = bullet
+	_bullet_type = bullet

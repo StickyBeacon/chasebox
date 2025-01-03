@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7qam5vwwjmse"]
+
+[ext_resource type="Script" path="res://bullets/basic_bullet.gd" id="1_fxoq7"]
+[ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="1_sevfl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6iju8"]
+size = Vector2(10, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fg0y2"]
+size = Vector2(86, 36)
+
+[node name="BasicBullet" type="RigidBody2D"]
+collision_layer = 0
+script = ExtResource("1_fxoq7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.6875, 0.28125)
+texture = ExtResource("1_sevfl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6iju8")
+
+[node name="PlayerCollisionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollisionArea"]
+modulate = Color(0.65098, 0.568627, 0, 0.611765)
+shape = SubResource("RectangleShape2D_fg0y2")
+
+[node name="GroundCollisionArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="GroundCollisionArea"]
+shape = SubResource("RectangleShape2D_6iju8")
+
+[connection signal="body_entered" from="PlayerCollisionArea" to="." method="_on_player_collision_area_body_entered"]
+[connection signal="body_entered" from="GroundCollisionArea" to="." method="_on_ground_collision_area_body_entered"]

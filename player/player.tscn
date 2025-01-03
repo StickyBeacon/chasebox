@@ -8,6 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wu2jy"]
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_bt2nw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -32,5 +33,13 @@ script = ExtResource("4_y48kl")
 unique_name_in_owner = true
 wait_time = 0.1
 one_shot = true
+
+[node name="AimCursor" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="AimCursor"]
+position = Vector2(30, 0)
+scale = Vector2(0.118, 0.118)
+texture = ExtResource("1_q0tl4")
 
 [connection signal="timeout" from="Timers/JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]

@@ -74,8 +74,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _add_gravity(delta):
-	var _down_modifier = 1 if !Input.is_action_pressed(input_dict["down"]) else DOWN_GRAV_MULTIPLIER
-	var _release_modifier = 1 if is_jump_held_in or player.velocity.y>0 else JUMP_RELEASE_MODIFIER 
+	var _down_modifier = 1.0 if !Input.is_action_pressed(input_dict["down"]) else DOWN_GRAV_MULTIPLIER
+	var _release_modifier = 1.0 if is_jump_held_in or player.velocity.y>0 else JUMP_RELEASE_MODIFIER 
 	
 	player.velocity += player.get_gravity() * delta * _down_modifier * _release_modifier
 
