@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ce8oxjeft3feq"]
+[gd_scene load_steps=7 format=3 uid="uid://ce8oxjeft3feq"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_bt2nw"]
 [ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="1_q0tl4"]
@@ -6,6 +6,9 @@
 [ext_resource type="Script" path="res://player/player_shooting.gd" id="4_y48kl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wu2jy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3coyb"]
+radius = 38.2099
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -22,6 +25,7 @@ shape = SubResource("RectangleShape2D_wu2jy")
 [node name="PrivateScripts" type="Node" parent="."]
 
 [node name="Movement" type="Node" parent="PrivateScripts"]
+unique_name_in_owner = true
 script = ExtResource("3_4uyti")
 
 [node name="Shooting" type="Node" parent="PrivateScripts"]
@@ -42,4 +46,22 @@ position = Vector2(30, 0)
 scale = Vector2(0.118, 0.118)
 texture = ExtResource("1_q0tl4")
 
+[node name="JumpIndicator" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.708337, 0, 0.416291, 1)
+z_index = 10
+position = Vector2(2.27374e-13, 21)
+scale = Vector2(0.305745, 0.0530571)
+texture = ExtResource("1_q0tl4")
+
+[node name="ChaseHitbox" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChaseHitbox"]
+shape = SubResource("CircleShape2D_3coyb")
+
 [connection signal="timeout" from="Timers/JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
+[connection signal="body_entered" from="ChaseHitbox" to="." method="_on_chase_hitbox_body_entered"]

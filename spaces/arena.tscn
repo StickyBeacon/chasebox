@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://gu2dwpe4sb72"]
+[gd_scene load_steps=6 format=3 uid="uid://gu2dwpe4sb72"]
 
 [ext_resource type="PackedScene" uid="uid://ce8oxjeft3feq" path="res://player/player.tscn" id="1_o0pj4"]
+[ext_resource type="Script" path="res://managers/round_manager.gd" id="1_pny5p"]
 [ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="2_on1n2"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_di7i8"]
@@ -10,93 +11,126 @@ size = Vector2(128, 128)
 
 [node name="Arena" type="Node2D"]
 
-[node name="BorderBottom" type="StaticBody2D" parent="."]
+[node name="Managers" type="Node" parent="."]
+
+[node name="RoundManager" type="Node" parent="Managers"]
+script = ExtResource("1_pny5p")
+
+[node name="PlayerManager" type="Node" parent="Managers"]
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="Player" parent="Players" instance=ExtResource("1_o0pj4")]
+position = Vector2(-394, 80)
+player_id = 1
+is_chaser = true
+
+[node name="Player2" parent="Players" instance=ExtResource("1_o0pj4")]
+position = Vector2(281, 184)
+player_id = 2
+
+[node name="Borders" type="Node2D" parent="."]
+
+[node name="BorderBottom" type="StaticBody2D" parent="Borders"]
 position = Vector2(0, 300)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderBottom"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderBottom"]
 shape = SubResource("WorldBoundaryShape2D_di7i8")
 
-[node name="BorderTop" type="StaticBody2D" parent="."]
+[node name="BorderTop" type="StaticBody2D" parent="Borders"]
 position = Vector2(0, -300)
 rotation = 3.14159
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderTop"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderTop"]
 shape = SubResource("WorldBoundaryShape2D_di7i8")
 
-[node name="BorderLeft" type="StaticBody2D" parent="."]
+[node name="BorderLeft" type="StaticBody2D" parent="Borders"]
 position = Vector2(-550, 0)
 rotation = 1.5708
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderLeft"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderLeft"]
 shape = SubResource("WorldBoundaryShape2D_di7i8")
 
-[node name="BorderRight" type="StaticBody2D" parent="."]
+[node name="BorderRight" type="StaticBody2D" parent="Borders"]
 position = Vector2(550, 0)
 rotation = -1.5708
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderRight"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderRight"]
 shape = SubResource("WorldBoundaryShape2D_di7i8")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Map" type="Node2D" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("1_o0pj4")]
-position = Vector2(-394, 80)
-
-[node name="Player2" parent="." instance=ExtResource("1_o0pj4")]
-position = Vector2(281, 184)
-is_player_1 = false
-
-[node name="Box" type="StaticBody2D" parent="."]
+[node name="Box" type="StaticBody2D" parent="Map"]
 position = Vector2(-124, 252)
 
-[node name="Sprite2D" type="Sprite2D" parent="Box"]
+[node name="Sprite2D" type="Sprite2D" parent="Map/Box"]
 modulate = Color(0.350029, 0.309714, 0.280276, 1)
 texture = ExtResource("2_on1n2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Box"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box"]
 modulate = Color(0.972105, 0.974033, 0.973949, 1)
 shape = SubResource("RectangleShape2D_64itd")
 
-[node name="Box2" type="StaticBody2D" parent="."]
+[node name="Box2" type="StaticBody2D" parent="Map"]
 position = Vector2(133, 259)
 
-[node name="Sprite2D" type="Sprite2D" parent="Box2"]
+[node name="Sprite2D" type="Sprite2D" parent="Map/Box2"]
 modulate = Color(0.350029, 0.309714, 0.280276, 1)
 texture = ExtResource("2_on1n2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Box2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box2"]
 modulate = Color(0.972105, 0.974033, 0.973949, 1)
 shape = SubResource("RectangleShape2D_64itd")
 
-[node name="Box3" type="StaticBody2D" parent="."]
+[node name="Box3" type="StaticBody2D" parent="Map"]
 position = Vector2(223, 31)
 
-[node name="Sprite2D" type="Sprite2D" parent="Box3"]
+[node name="Sprite2D" type="Sprite2D" parent="Map/Box3"]
 modulate = Color(0.350029, 0.309714, 0.280276, 1)
 texture = ExtResource("2_on1n2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Box3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box3"]
 modulate = Color(0.972105, 0.974033, 0.973949, 1)
 shape = SubResource("RectangleShape2D_64itd")
 
-[node name="Box4" type="StaticBody2D" parent="."]
+[node name="Box4" type="StaticBody2D" parent="Map"]
 position = Vector2(-254, -77)
 
-[node name="Sprite2D" type="Sprite2D" parent="Box4"]
+[node name="Sprite2D" type="Sprite2D" parent="Map/Box4"]
 modulate = Color(0.350029, 0.309714, 0.280276, 1)
 texture = ExtResource("2_on1n2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Box4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box4"]
 modulate = Color(0.972105, 0.974033, 0.973949, 1)
 shape = SubResource("RectangleShape2D_64itd")
 
-[node name="Box5" type="StaticBody2D" parent="."]
+[node name="Box5" type="StaticBody2D" parent="Map"]
 position = Vector2(281, -196)
 
-[node name="Sprite2D" type="Sprite2D" parent="Box5"]
+[node name="Sprite2D" type="Sprite2D" parent="Map/Box5"]
 modulate = Color(0.350029, 0.309714, 0.280276, 1)
 texture = ExtResource("2_on1n2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Box5"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box5"]
 modulate = Color(0.972105, 0.974033, 0.973949, 1)
 shape = SubResource("RectangleShape2D_64itd")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 65)
+scale = Vector2(1, 0.428172)
+zoom = Vector2(0.8, 0.8)
+
+[node name="GameUI" type="CanvasLayer" parent="."]
+
+[node name="PlayerTimer" type="Label" parent="GameUI"]
+offset_left = 41.0
+offset_top = 37.0
+offset_right = 81.0
+offset_bottom = 60.0
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ActualTimer" type="Timer" parent="GameUI/PlayerTimer"]
+wait_time = 20.0
+one_shot = true

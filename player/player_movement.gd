@@ -1,6 +1,6 @@
 extends Node
 
-@onready var player :CharacterBody2D = $"../.."
+@onready var player :Player = $"../.."
 
 const SPEED = 500.0
 const AIR_ACCEL = 10.0
@@ -21,10 +21,8 @@ var input_dict = {"jump" = null,"shoot"= null,"left"= null,"right"= null,"up"= n
 
 
 func _ready() -> void:
-	var player_number = 1 if player.is_player_1 else 2
-	
 	for key in input_dict.keys():
-		input_dict[key] = key + str(player_number)
+		input_dict[key] = key + str(player.player_id)
 
 
 func _input(event: InputEvent) -> void:
@@ -35,6 +33,7 @@ func _input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if (player.is_on_floor() or player.is_on_wall()) and !free_jump:
 		free_jump = true
+		%JumpIndicator.visible = true
 	
 	# Handle gravity
 	if not player.is_on_floor():
@@ -42,6 +41,7 @@ func _physics_process(delta: float) -> void:
 		
 	# Add jump buffer
 	elif is_jump_buffered:
+		print("myes")
 		_activate_jump()
 	
 	# Handle jump press
@@ -50,7 +50,6 @@ func _physics_process(delta: float) -> void:
 		if free_jump: # free jump!
 			_activate_jump()
 		else: #Start buffer
-			is_jump_buffered = true
 			%JumpBufferTimer.stop()
 			%JumpBufferTimer.start()
 			
@@ -89,3 +88,8 @@ func _activate_jump():
 	is_jump_buffered = false
 	%JumpBufferTimer.stop()
 	free_jump = false
+	%JumpIndicator.visible = false
+
+
+func add_force(force:Vector2):
+	player.velocity += force

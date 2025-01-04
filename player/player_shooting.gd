@@ -9,10 +9,8 @@ const AIM_LERP_SPEED = 15
 
 
 func _ready() -> void:
-	var _player_number = 1 if player.is_player_1 else 2
-	
 	for key in _input_dict.keys():
-		_input_dict[key] = key + str(_player_number)
+		_input_dict[key] = key + str(player.player_id)
 
 
 func _input(event: InputEvent) -> void:
@@ -33,7 +31,7 @@ func shoot():
 	var _new_bullet = _bullet_type.instantiate()
 	get_tree().root.add_child(_new_bullet)
 	_new_bullet.position = player.global_position
-	_new_bullet.activate(player.get_player_id(), _aim_rot, player.velocity)
+	_new_bullet.activate(player.player_id, _aim_rot, player.velocity)
 	# -> rotate bullet according to _aim_rot
 	# -> Add trauma based on bullet strength
 	pass
