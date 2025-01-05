@@ -27,16 +27,23 @@ enum GameMode {
 }
 
 
+func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
+	if event.is_action_pressed("ui_focus_next"):
+		%PlayerManager.add_player(1)
+		%PlayerManager.add_player(2)
+		start_game()
+
+
 # Voor het zetten van de spelers, max round count etc. 
-func set_game_values(player_array:Array, round_count:int):
+func set_game_values(player_array:Array, new_round_count:int):
 	chosen_players = player_array
-	max_round_count = round_count
+	max_round_count = new_round_count
 	pass
 
 
 func start_game():
 	#TODO inladen van UI en characters op basis van de gekozen spelers
-	
+	print("%s: Starting game" % name)
 	# Reset alle in-game-bepaalde waarden
 	reset_values()
 	initialize_values()
@@ -47,6 +54,7 @@ func start_game():
 
 
 func next_round():
+	print("%s: next round" % name)
 	round_count += 1
 	
 	if round_count > max_round_count:
@@ -63,6 +71,8 @@ func next_round():
 
 func next_turn():
 	turn_count += 1
+	print("%s: turn %s round %s" % [name, turn_count, round_count])
+	clear_turn()
 	#Als alle turns voorbij zijn, begin nieuwe "ronde"
 	if turn_count > turn_order.size():
 		calculate_round_points()
@@ -71,21 +81,36 @@ func next_turn():
 		return
 		
 	var chosen_id = turn_order[turn_count-1]
-
-	match(current_gamemode):
-		GameMode.Hunter:
-			team_dict[Team.Chaser].append(chosen_id)
-			for player_id in chosen_players:
-				if player_id == chosen_id: continue
-				team_dict[Team.Runner].append(player_id)
-		GameMode.Prey:
-			team_dict[Team.Runner].append(chosen_id)
-			for player_id in chosen_players:
-				if player_id == chosen_id: continue
-				team_dict[Team.Chaser].append(player_id)
-	# TODO
-	# Spawn alle runners in runner plekken
-	# Spawn alle chasers in chaser plekken
+	
+	# Enkel de Hunter gamemode for now
+	team_dict[Team.Chaser].append(chosen_id)
+	for player_id in chosen_players:
+		if player_id == chosen_id: continue
+		team_dict[Team.Runner].append(player_id)
+	
+	#match(current_gamemode): TODO gamemodes?
+		#GameMode.Hunter:
+			#team_dict[Team.Chaser].append(chosen_id)
+			#for player_id in chosen_players:
+				#if player_id == chosen_id: continue
+				#team_dict[Team.Runner].append(player_id)
+		#GameMode.Prey:
+			#team_dict[Team.Runner].append(chosen_id)
+			#for player_id in chosen_players:
+				#if player_id == chosen_id: continue
+				#team_dict[Team.Chaser].append(player_id)
+	
+	
+	# TODO maak maps bruh
+	# Initialize player variables based on team
+	var run_spawn = Vector2(-400,-200) # temp
+	var chase_spawn = Vector2(400,200) # temp
+	for id in chosen_players:
+		var player :Player= %PlayerManager.get_player(id)
+		player.is_chaser = true if id in team_dict[Team.Chaser] else false
+		player.global_position = chase_spawn if id in team_dict[Team.Chaser] else run_spawn
+	
+	# Game starts
 	
 	
 func reset_values():
@@ -100,32 +125,32 @@ func reset_values():
 
 func initialize_values():
 	for player_id in chosen_players:
+		var player :Player = %PlayerManager.get_player(player_id)
 		game_score_dict[player_id] = 0
 		round_time_dict[player_id] = 0
 		total_time_dict[player_id] = 0
+		if !player.player_died.is_connected(on_player_died):
+			player.player_died.connect(on_player_died)
+		
 
 
-func player_died(player:Player):
-	team_dict[int(player.is_chaser)].erase(player.player_id)
+func on_player_died(player_id):
+	var player :Player= %PlayerManager.get_player(player_id)
+	team_dict[player.get_team()].erase(player_id)
 	if !player.is_chaser:
 		#TODO stop timer, & save to turn_score_dict
 		#add_round_time(player)
 		pass
 	
 	# Een team is volledig dood
-	if team_dict[int(player.is_chaser)].size() == 0:
+	if team_dict[player.get_team()].size() == 0:
 		#TODO Freeze game, toon wat er gebeurt is
-		
 		next_turn()
 	elif player.is_chaser: #Speler is chaser en andere chaser leeft nog
-		print("%s: loser alert. Een chaser is gestorven? Bruh" % name)
+		printerr("%s: loser alert. Een chaser is gestorven? Bruh" % name)
 
 
 func add_round_time(player_id, time):
-	#TODO momenteel is dit gebaseerd op totale tijd.
-	# Als een speler dus een keer 20 seconden overleeft is er een grote
-	# kans dat hij gaat winnen
-	
 	if team_dict[Team.Chaser].has(player_id):
 		printerr("%s: Chasers hebben geen timer om te scoren!" % name)
 	
@@ -138,6 +163,10 @@ func calculate_round_points():
 	# Spelers kunnen tie-en :(
 	
 	var values = round_time_dict.values()
-	var player_id = round_time_dict.keys()[values.find(max(values))]
+	var player_id = round_time_dict.keys()[values.find(values.max())]
 	
 	game_score_dict[player_id] += 1
+
+
+func clear_turn(): # TODO Hier ook iets te doen met time? denkik?
+	team_dict = {Team.Chaser: [], Team.Runner: []}

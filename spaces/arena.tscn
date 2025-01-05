@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://gu2dwpe4sb72"]
 
-[ext_resource type="PackedScene" uid="uid://ce8oxjeft3feq" path="res://player/player.tscn" id="1_o0pj4"]
 [ext_resource type="Script" path="res://managers/round_manager.gd" id="1_pny5p"]
+[ext_resource type="Script" path="res://managers/player_manager.gd" id="2_23jyq"]
 [ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="2_on1n2"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_di7i8"]
@@ -14,20 +14,15 @@ size = Vector2(128, 128)
 [node name="Managers" type="Node" parent="."]
 
 [node name="RoundManager" type="Node" parent="Managers"]
+unique_name_in_owner = true
 script = ExtResource("1_pny5p")
 
 [node name="PlayerManager" type="Node" parent="Managers"]
+unique_name_in_owner = true
+script = ExtResource("2_23jyq")
 
-[node name="Players" type="Node2D" parent="."]
-
-[node name="Player" parent="Players" instance=ExtResource("1_o0pj4")]
-position = Vector2(-394, 80)
-player_id = 1
-is_chaser = true
-
-[node name="Player2" parent="Players" instance=ExtResource("1_o0pj4")]
-position = Vector2(281, 184)
-player_id = 2
+[node name="PlayerNode" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="Borders" type="Node2D" parent="."]
 
@@ -116,9 +111,7 @@ modulate = Color(0.972105, 0.974033, 0.973949, 1)
 shape = SubResource("RectangleShape2D_64itd")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, 65)
 scale = Vector2(1, 0.428172)
-zoom = Vector2(0.8, 0.8)
 
 [node name="GameUI" type="CanvasLayer" parent="."]
 

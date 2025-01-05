@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b7qam5vwwjmse"]
 
-[ext_resource type="Script" path="res://bullets/basic_bullet.gd" id="1_fxoq7"]
+[ext_resource type="Script" path="res://spawnables/basic_bullet.gd" id="1_fxoq7"]
 [ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="1_sevfl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6iju8"]

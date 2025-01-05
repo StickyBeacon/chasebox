@@ -30,5 +30,5 @@ func _on_player_collision_area_body_entered(body: Node2D) -> void:
 		body.hit_player(self)
 
 
-func _on_ground_collision_area_body_entered(body: Node2D) -> void:
+func _on_ground_collision_area_body_entered(_body: Node2D) -> void:
 	remove()
