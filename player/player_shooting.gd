@@ -3,7 +3,7 @@ extends Node
 @onready var player :Player = $"../.."
 var _input_dict = {"jump" = null,"shoot"= null,"left"= null,"right"= null,"up"= null,"down"= null}
 
-var _bullet_type = preload("res://bullets/basic_bullet.tscn")
+var _bullet_type = preload("res://spawnables/basic_bullet.tscn")
 var _aim_rot:float = 0
 const AIM_LERP_SPEED = 15
 

@@ -1,11 +1,26 @@
 extends CharacterBody2D
 class_name Player
 
-@export var player_id = 0
+@export var player_id = 0:
+	set(value):
+		
+		match(value):
+			1:
+				$Sprite2D.modulate = Color(1,0,0)
+			2:
+				$Sprite2D.modulate = Color(0,1,0)
+			3:
+				$Sprite2D.modulate = Color(0,0,1)
+			4:
+				$Sprite2D.modulate = Color(1,1,0)
+			_:
+				printerr("%s: value %s is not valid playerid"% [name, value])
+		player_id = value
 @export var is_chaser :bool= false:
 	set(value):
 		is_chaser = value
 		%ChaseHitbox.set_deferred("monitoring",value)
+		%ChaseSprite.set_deferred("visible",value) 
 
 signal player_died(id)
 

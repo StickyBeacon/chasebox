@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://gu2dwpe4sb72"]
+[gd_scene load_steps=7 format=3 uid="uid://gu2dwpe4sb72"]
 
 [ext_resource type="Script" path="res://managers/round_manager.gd" id="1_pny5p"]
 [ext_resource type="Script" path="res://managers/player_manager.gd" id="2_23jyq"]
 [ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="2_on1n2"]
+[ext_resource type="Script" path="res://managers/runner_timer.gd" id="4_5nhrc"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_di7i8"]
 
@@ -116,6 +117,7 @@ scale = Vector2(1, 0.428172)
 [node name="GameUI" type="CanvasLayer" parent="."]
 
 [node name="PlayerTimer" type="Label" parent="GameUI"]
+unique_name_in_owner = true
 offset_left = 41.0
 offset_top = 37.0
 offset_right = 81.0
@@ -123,7 +125,11 @@ offset_bottom = 60.0
 text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("4_5nhrc")
 
 [node name="ActualTimer" type="Timer" parent="GameUI/PlayerTimer"]
-wait_time = 20.0
+unique_name_in_owner = true
+wait_time = 10.0
 one_shot = true
+
+[connection signal="timeout" from="GameUI/PlayerTimer/ActualTimer" to="Managers/RoundManager" method="_on_round_timer_timeout"]

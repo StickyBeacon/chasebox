@@ -56,10 +56,10 @@ func start_game():
 func next_round():
 	print("%s: next round" % name)
 	round_count += 1
+	clear_round()
 	
 	if round_count > max_round_count:
-		#TODO end game. show score. show total time. Options: menu, again
-		print("%s: Game ended" % name)
+		end_game()
 		return
 	
 	#TODO laad nieuwe map
@@ -111,8 +111,9 @@ func next_turn():
 		player.global_position = chase_spawn if id in team_dict[Team.Chaser] else run_spawn
 	
 	# Game starts
-	
-	
+	%PlayerTimer.start_timer()
+
+
 func reset_values():
 	turn_count = 0
 	round_count = 0
@@ -138,14 +139,12 @@ func on_player_died(player_id):
 	var player :Player= %PlayerManager.get_player(player_id)
 	team_dict[player.get_team()].erase(player_id)
 	if !player.is_chaser:
-		#TODO stop timer, & save to turn_score_dict
-		#add_round_time(player)
+		add_round_time(player_id,%PlayerTimer.get_current_time())
 		pass
 	
 	# Een team is volledig dood
 	if team_dict[player.get_team()].size() == 0:
-		#TODO Freeze game, toon wat er gebeurt is
-		next_turn()
+		end_turn()
 	elif player.is_chaser: #Speler is chaser en andere chaser leeft nog
 		printerr("%s: loser alert. Een chaser is gestorven? Bruh" % name)
 
@@ -154,6 +153,7 @@ func add_round_time(player_id, time):
 	if team_dict[Team.Chaser].has(player_id):
 		printerr("%s: Chasers hebben geen timer om te scoren!" % name)
 	
+	print("%s: %s survived %s" % [name, player_id, time])
 	round_time_dict[player_id] += time
 	total_time_dict[player_id] += time
 
@@ -164,9 +164,37 @@ func calculate_round_points():
 	
 	var values = round_time_dict.values()
 	var player_id = round_time_dict.keys()[values.find(values.max())]
-	
+	print("%s: %s got point this round!" % [name, player_id])
 	game_score_dict[player_id] += 1
-
+	
 
 func clear_turn(): # TODO Hier ook iets te doen met time? denkik?
 	team_dict = {Team.Chaser: [], Team.Runner: []}
+
+
+func clear_round():
+	for id in round_time_dict.keys():
+		round_time_dict[id] = 0
+
+
+func _on_round_timer_timeout() -> void:
+	for id in team_dict[Team.Runner]:
+		add_round_time(id,%ActualTimer.wait_time)
+		end_turn()
+
+
+func end_turn():
+	#TODO Toon hier de freeze en wat er gebeurt?
+	%PlayerTimer.reset_timer()
+	next_turn()
+
+
+func end_game():
+	#TODO end game. show score. show total time. Options: menu, again
+	for id in total_time_dict.keys():
+		print("%s: %s time is %s" % [name,id,total_time_dict[id]])
+	
+	var values = total_time_dict.values()
+	var player_id = total_time_dict.keys()[values.find(values.max())]
+	print("%s: %s won!" % [name,player_id])
+	
