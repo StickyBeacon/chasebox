@@ -14,11 +14,13 @@ radius = 66.0681
 collision_layer = 2
 script = ExtResource("1_bt2nw")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 scale = Vector2(0.234, 0.234)
 texture = ExtResource("1_q0tl4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PlayerCollision" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
 scale = Vector2(1.5, 1.5)
 shape = SubResource("RectangleShape2D_wu2jy")
 
@@ -60,7 +62,8 @@ collision_layer = 0
 collision_mask = 2
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ChaseHitbox"]
+[node name="ChaseCollision" type="CollisionShape2D" parent="ChaseHitbox"]
+unique_name_in_owner = true
 shape = SubResource("CircleShape2D_3coyb")
 
 [node name="ChaseSprite" type="Sprite2D" parent="."]

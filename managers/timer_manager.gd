@@ -1,7 +1,7 @@
-extends Label
+extends Node
 
 @onready var timer :Timer = %ActualTimer
-@onready var label :Label = self
+@onready var label :Label = %TimeLabel
 
 
 func _physics_process(_delta: float) -> void:

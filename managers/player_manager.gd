@@ -23,6 +23,8 @@ func add_player(player_id): # zou ook extra info kunnen bevatten (welke items)
 
 
 func clear_players():
+	for player:Player in %PlayerNode.get_children():
+		player.queue_free()
 	player_dict = {}
 
 
@@ -31,5 +33,17 @@ func get_player(id):
 		printerr("%s: %s niet in playerdict" % [name, id])
 		return null
 	return player_dict[id]
-	
-	
+
+
+func toggle_all_players(value):
+	for id in player_dict.keys():
+		player_dict[id].enabled = value
+
+
+func toggle_player(id, value):
+	player_dict[id].enabled = value
+
+
+func reset_players():
+	for id in player_dict:
+		player_dict[id].velocity = Vector2.ZERO

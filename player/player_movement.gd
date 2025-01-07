@@ -19,6 +19,8 @@ var free_jump = false
 
 var input_dict = {"jump" = null,"shoot"= null,"left"= null,"right"= null,"up"= null,"down"= null}
 
+var can_move:bool = false
+
 
 func _ready() -> void:
 	for key in input_dict.keys():
@@ -26,11 +28,13 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if !can_move: return
 	if event.is_action_released(input_dict["jump"]) and is_jump_held_in:
 		is_jump_held_in = false
 
 
 func _physics_process(delta: float) -> void:
+	if !can_move: return
 	if (player.is_on_floor() or player.is_on_wall()) and !free_jump:
 		free_jump = true
 		%JumpIndicator.visible = true

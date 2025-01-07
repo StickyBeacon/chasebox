@@ -1,28 +1,47 @@
 [gd_scene load_steps=7 format=3 uid="uid://gu2dwpe4sb72"]
 
+[ext_resource type="Script" path="res://managers/timer_manager.gd" id="1_7i13x"]
 [ext_resource type="Script" path="res://managers/round_manager.gd" id="1_pny5p"]
 [ext_resource type="Script" path="res://managers/player_manager.gd" id="2_23jyq"]
-[ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="2_on1n2"]
-[ext_resource type="Script" path="res://managers/runner_timer.gd" id="4_5nhrc"]
+[ext_resource type="Script" path="res://managers/ingame_ui_manager.gd" id="3_ajy73"]
+[ext_resource type="Script" path="res://managers/map_manager.gd" id="5_571it"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_di7i8"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_64itd"]
-size = Vector2(128, 128)
 
 [node name="Arena" type="Node2D"]
 
 [node name="Managers" type="Node" parent="."]
 
+[node name="TimerManager" type="Node" parent="Managers"]
+unique_name_in_owner = true
+script = ExtResource("1_7i13x")
+
+[node name="ActualTimer" type="Timer" parent="Managers/TimerManager"]
+unique_name_in_owner = true
+wait_time = 10.0
+one_shot = true
+
 [node name="RoundManager" type="Node" parent="Managers"]
 unique_name_in_owner = true
+process_mode = 3
 script = ExtResource("1_pny5p")
 
 [node name="PlayerManager" type="Node" parent="Managers"]
 unique_name_in_owner = true
 script = ExtResource("2_23jyq")
 
+[node name="IngameUIManager" type="Node" parent="Managers"]
+unique_name_in_owner = true
+script = ExtResource("3_ajy73")
+
+[node name="MapManager" type="Node" parent="Managers"]
+unique_name_in_owner = true
+script = ExtResource("5_571it")
+
 [node name="PlayerNode" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Map" type="Node2D" parent="."]
 unique_name_in_owner = true
 
 [node name="Borders" type="Node2D" parent="."]
@@ -54,69 +73,12 @@ rotation = -1.5708
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderRight"]
 shape = SubResource("WorldBoundaryShape2D_di7i8")
 
-[node name="Map" type="Node2D" parent="."]
-
-[node name="Box" type="StaticBody2D" parent="Map"]
-position = Vector2(-124, 252)
-
-[node name="Sprite2D" type="Sprite2D" parent="Map/Box"]
-modulate = Color(0.350029, 0.309714, 0.280276, 1)
-texture = ExtResource("2_on1n2")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box"]
-modulate = Color(0.972105, 0.974033, 0.973949, 1)
-shape = SubResource("RectangleShape2D_64itd")
-
-[node name="Box2" type="StaticBody2D" parent="Map"]
-position = Vector2(133, 259)
-
-[node name="Sprite2D" type="Sprite2D" parent="Map/Box2"]
-modulate = Color(0.350029, 0.309714, 0.280276, 1)
-texture = ExtResource("2_on1n2")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box2"]
-modulate = Color(0.972105, 0.974033, 0.973949, 1)
-shape = SubResource("RectangleShape2D_64itd")
-
-[node name="Box3" type="StaticBody2D" parent="Map"]
-position = Vector2(223, 31)
-
-[node name="Sprite2D" type="Sprite2D" parent="Map/Box3"]
-modulate = Color(0.350029, 0.309714, 0.280276, 1)
-texture = ExtResource("2_on1n2")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box3"]
-modulate = Color(0.972105, 0.974033, 0.973949, 1)
-shape = SubResource("RectangleShape2D_64itd")
-
-[node name="Box4" type="StaticBody2D" parent="Map"]
-position = Vector2(-254, -77)
-
-[node name="Sprite2D" type="Sprite2D" parent="Map/Box4"]
-modulate = Color(0.350029, 0.309714, 0.280276, 1)
-texture = ExtResource("2_on1n2")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box4"]
-modulate = Color(0.972105, 0.974033, 0.973949, 1)
-shape = SubResource("RectangleShape2D_64itd")
-
-[node name="Box5" type="StaticBody2D" parent="Map"]
-position = Vector2(281, -196)
-
-[node name="Sprite2D" type="Sprite2D" parent="Map/Box5"]
-modulate = Color(0.350029, 0.309714, 0.280276, 1)
-texture = ExtResource("2_on1n2")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box5"]
-modulate = Color(0.972105, 0.974033, 0.973949, 1)
-shape = SubResource("RectangleShape2D_64itd")
-
 [node name="Camera2D" type="Camera2D" parent="."]
 scale = Vector2(1, 0.428172)
 
 [node name="GameUI" type="CanvasLayer" parent="."]
 
-[node name="PlayerTimer" type="Label" parent="GameUI"]
+[node name="TimeLabel" type="Label" parent="GameUI"]
 unique_name_in_owner = true
 offset_left = 41.0
 offset_top = 37.0
@@ -125,11 +87,37 @@ offset_bottom = 60.0
 text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("4_5nhrc")
 
-[node name="ActualTimer" type="Timer" parent="GameUI/PlayerTimer"]
+[node name="TurnAnouncer" type="ColorRect" parent="GameUI"]
 unique_name_in_owner = true
-wait_time = 10.0
-one_shot = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -201.0
+offset_top = -78.0
+offset_right = 201.0
+offset_bottom = 78.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.74558, 0.74558, 0.74558, 0.482353)
 
-[connection signal="timeout" from="GameUI/PlayerTimer/ActualTimer" to="Managers/RoundManager" method="_on_round_timer_timeout"]
+[node name="TurnAnouncerText" type="Label" parent="GameUI/TurnAnouncer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "TEEEXT!!!"
+
+[connection signal="timeout" from="Managers/TimerManager/ActualTimer" to="Managers/RoundManager" method="_on_round_timer_timeout"]

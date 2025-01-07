@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://bry1y8hn5s5hf"]
+
+[ext_resource type="Script" path="res://spaces/maps/base_map.gd" id="1_om6d8"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ytfgc"]
+
+[node name="BaseMap" type="Node2D"]
+script = ExtResource("1_om6d8")
+
+[node name="ChaserSpawn" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-352, 168)
+
+[node name="RunnerSpawn" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(375, 174)
+
+[node name="Borders" type="Node2D" parent="."]
+
+[node name="BorderBottom" type="StaticBody2D" parent="Borders"]
+position = Vector2(0, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderBottom"]
+shape = SubResource("WorldBoundaryShape2D_ytfgc")
+
+[node name="BorderTop" type="StaticBody2D" parent="Borders"]
+position = Vector2(0, -300)
+rotation = 3.14159
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderTop"]
+shape = SubResource("WorldBoundaryShape2D_ytfgc")
+
+[node name="BorderLeft" type="StaticBody2D" parent="Borders"]
+position = Vector2(-550, 0)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderLeft"]
+shape = SubResource("WorldBoundaryShape2D_ytfgc")
+
+[node name="BorderRight" type="StaticBody2D" parent="Borders"]
+position = Vector2(550, 0)
+rotation = -1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderRight"]
+shape = SubResource("WorldBoundaryShape2D_ytfgc")

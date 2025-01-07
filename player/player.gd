@@ -3,16 +3,19 @@ class_name Player
 
 @export var player_id = 0:
 	set(value):
-		
 		match(value):
 			1:
-				$Sprite2D.modulate = Color(1,0,0)
+				%PlayerSprite.modulate = Color(1,0,0)
+				%JumpIndicator.modulate = Color(1,0,0)
 			2:
-				$Sprite2D.modulate = Color(0,1,0)
+				%PlayerSprite.modulate = Color(0,1,0)
+				%JumpIndicator.modulate = Color(0,1,0)
 			3:
-				$Sprite2D.modulate = Color(0,0,1)
+				%PlayerSprite.modulate = Color(0,0,1)
+				%JumpIndicator.modulate = Color(0,0,1)
 			4:
-				$Sprite2D.modulate = Color(1,1,0)
+				%PlayerSprite.modulate = Color(1,1,0)
+				%JumpIndicator.modulate = Color(1,1,0)
 			_:
 				printerr("%s: value %s is not valid playerid"% [name, value])
 		player_id = value
@@ -21,6 +24,15 @@ class_name Player
 		is_chaser = value
 		%ChaseHitbox.set_deferred("monitoring",value)
 		%ChaseSprite.set_deferred("visible",value) 
+
+@export var enabled :bool = false:
+	set(value):
+		enabled = value
+		%Movement.can_move = value
+		%PlayerCollision.set_deferred("disabled",!value)
+		%ChaseCollision.set_deferred("disabled",!value)
+		visible = value
+
 
 signal player_died(id)
 

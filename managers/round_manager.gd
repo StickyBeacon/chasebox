@@ -11,7 +11,7 @@ var round_time_dict = {}
 var total_time_dict = {}
 var turn_order = []
 # de spelers die gekozen worden, worden hierin toegevoegd. standaard op 1 en 2
-var chosen_players = [1,2]
+var chosen_players = []
 # 0 is chasers, 1 is runners
 var team_dict = {Team.Chaser: [], Team.Runner: []}
 var current_gamemode:GameMode = GameMode.Hunter
@@ -29,8 +29,9 @@ enum GameMode {
 
 func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
 	if event.is_action_pressed("ui_focus_next"):
-		%PlayerManager.add_player(1)
-		%PlayerManager.add_player(2)
+		chosen_players = [1,2]
+		for id in chosen_players:
+			%PlayerManager.add_player(id)
 		start_game()
 
 
@@ -50,6 +51,7 @@ func start_game():
 	# Shuffle turn order voor dit spel
 	turn_order = chosen_players.duplicate()
 	turn_order.shuffle()
+	%PlayerManager.toggle_all_players(true)
 	next_round()
 
 
@@ -72,6 +74,7 @@ func next_round():
 func next_turn():
 	turn_count += 1
 	print("%s: turn %s round %s" % [name, turn_count, round_count])
+	%PlayerManager.reset_players()
 	clear_turn()
 	#Als alle turns voorbij zijn, begin nieuwe "ronde"
 	if turn_count > turn_order.size():
@@ -111,7 +114,7 @@ func next_turn():
 		player.global_position = chase_spawn if id in team_dict[Team.Chaser] else run_spawn
 	
 	# Game starts
-	%PlayerTimer.start_timer()
+	%TimerManager.start_timer()
 
 
 func reset_values():
@@ -139,12 +142,14 @@ func on_player_died(player_id):
 	var player :Player= %PlayerManager.get_player(player_id)
 	team_dict[player.get_team()].erase(player_id)
 	if !player.is_chaser:
-		add_round_time(player_id,%PlayerTimer.get_current_time())
-		pass
+		add_round_time(player_id,%TimerManager.get_current_time())
+		#TODO Momenteel enkel geprogrammeerd voor 2 players
+		# Players worden dus niet verwijdert als ze sterven. Gewoon verplaatst.
 	
 	# Een team is volledig dood
 	if team_dict[player.get_team()].size() == 0:
 		end_turn()
+		
 	elif player.is_chaser: #Speler is chaser en andere chaser leeft nog
 		printerr("%s: loser alert. Een chaser is gestorven? Bruh" % name)
 
@@ -185,12 +190,19 @@ func _on_round_timer_timeout() -> void:
 
 func end_turn():
 	#TODO Toon hier de freeze en wat er gebeurt?
-	%PlayerTimer.reset_timer()
+	get_tree().paused = true
+	%IngameUIManager.toggle_turn_ui(true, "booger,s")
+	await wait(1)
+	%IngameUIManager.toggle_turn_ui(false)
+	get_tree().paused = false
+	%TimerManager.reset_timer()
 	next_turn()
+	
 
 
 func end_game():
 	#TODO end game. show score. show total time. Options: menu, again
+	%PlayerManager.toggle_all_players(false)
 	for id in total_time_dict.keys():
 		print("%s: %s time is %s" % [name,id,total_time_dict[id]])
 	
@@ -198,3 +210,12 @@ func end_game():
 	var player_id = total_time_dict.keys()[values.find(values.max())]
 	print("%s: %s won!" % [name,player_id])
 	
+
+func restart_game():
+	#TODO eigenlijk gewoon game start zonder dat allerlei waardes worden aangepast
+	pass
+
+
+
+func wait(seconds: float) -> void:
+	await get_tree().create_timer(seconds).timeout
