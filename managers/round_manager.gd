@@ -65,6 +65,7 @@ func next_round():
 		return
 	
 	#TODO laad nieuwe map
+	%MapManager.generate_random_map()
 	current_gamemode = GameMode.values().pick_random()
 	turn_order.reverse()
 	next_turn()
@@ -106,13 +107,7 @@ func next_turn():
 	
 	# TODO maak maps bruh
 	# Initialize player variables based on team
-	var run_spawn = Vector2(-400,-200) # temp
-	var chase_spawn = Vector2(400,200) # temp
-	for id in chosen_players:
-		var player :Player= %PlayerManager.get_player(id)
-		player.is_chaser = true if id in team_dict[Team.Chaser] else false
-		player.global_position = chase_spawn if id in team_dict[Team.Chaser] else run_spawn
-	
+	%MapManager.spawn_players(team_dict)
 	# Game starts
 	%TimerManager.start_timer()
 
