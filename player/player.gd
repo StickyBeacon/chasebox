@@ -31,6 +31,7 @@ class_name Player
 		%Movement.can_move = value
 		%PlayerCollision.set_deferred("disabled",!value)
 		%ChaseCollision.set_deferred("disabled",!value)
+		print("%s: %s" % [player_id,value])
 		visible = value
 
 
@@ -38,6 +39,8 @@ signal player_died(id)
 
 
 func hit_player(object):
+	if !enabled: return
+	
 	print("%s got hit by %s" % [player_id, object.name]) 
 	if !is_chaser:
 		kill_player()

@@ -51,7 +51,6 @@ func start_game():
 	# Shuffle turn order voor dit spel
 	turn_order = chosen_players.duplicate()
 	turn_order.shuffle()
-	%PlayerManager.toggle_all_players(true)
 	next_round()
 
 
@@ -63,8 +62,7 @@ func next_round():
 	if round_count > max_round_count:
 		end_game()
 		return
-	
-	#TODO laad nieuwe map
+
 	%MapManager.generate_random_map()
 	current_gamemode = GameMode.values().pick_random()
 	turn_order.reverse()
@@ -107,9 +105,13 @@ func next_turn():
 	
 	# TODO maak maps bruh
 	# Initialize player variables based on team
+	%PlayerManager.toggle_all_players(false)
 	%MapManager.spawn_players(team_dict)
 	# Game starts
+	await wait(.3) #TODO maak het hier duidelijk wie waar spawnt? idk man
 	%TimerManager.start_timer()
+	
+	%PlayerManager.toggle_all_players(true)
 
 
 func reset_values():
@@ -190,6 +192,7 @@ func end_turn():
 	await wait(1)
 	%IngameUIManager.toggle_turn_ui(false)
 	get_tree().paused = false
+	%PlayerManager.toggle_all_players(false)
 	%TimerManager.reset_timer()
 	next_turn()
 	
