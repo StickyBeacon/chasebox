@@ -75,7 +75,7 @@ func _next_turn():
 		if player_id == chosen_id: continue
 		_team_dict[Utils.Team.Runner].append(player_id)
 	
-	#match(_current_gamemode): TODO gamemodes?
+	#match(_current_gamemode): #TODO gamemodes?
 		#Utils.GameMode.Hunter:
 			#_team_dict[Utils.Team.Chaser].append(chosen_id)
 			#for player_id in _chosen_players:
@@ -148,6 +148,7 @@ func _on_round_timer_timeout() -> void:
 func _end_turn():
 	#TODO Toon hier de freeze en wat er gebeurt?
 	get_tree().paused = true
+	set_turn_indicator()
 	%IngameUIManager.set_turn_ui(true, "booger,s")
 	await _wait(1)
 	%IngameUIManager.set_turn_ui(false)
@@ -170,3 +171,16 @@ func restart_game():
 
 func _wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
+	
+
+func set_turn_indicator():
+	var next_count = _turn_count + 1
+	var next_order = _turn_order.duplicate(true)
+	#Als alle turns voorbij zijn, begin nieuwe "ronde"
+	if next_count > next_order.size():
+		next_count = 1
+		next_order.reverse()
+		%TurnIndicator.set_players(next_order,next_count)
+		return
+		
+	%TurnIndicator.set_players(next_order,next_count)

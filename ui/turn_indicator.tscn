@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://dosdfkupctoop"]
+
+[ext_resource type="Texture2D" uid="uid://ch6g4bsnqf6vw" path="res://assets/images/WaveIcon.png" id="1_5jyca"]
+[ext_resource type="Script" path="res://ui/turn_indicator.gd" id="1_ci6sr"]
+[ext_resource type="Texture2D" uid="uid://d2e1seb6s6or2" path="res://assets/images/BratIcon.png" id="2_xnehc"]
+[ext_resource type="Texture2D" uid="uid://nfpu5dm40eti" path="res://assets/images/QueenIcon.png" id="3_ib3yg"]
+[ext_resource type="Texture2D" uid="uid://ojc6tax11bf8" path="res://assets/images/JuliettIcon.png" id="4_78wlx"]
+
+[node name="TurnIndicator" type="HBoxContainer"]
+alignment = 1
+script = ExtResource("1_ci6sr")
+
+[node name="1" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("1_5jyca")
+
+[node name="2" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("2_xnehc")
+
+[node name="3" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_ib3yg")
+
+[node name="4" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("4_78wlx")
