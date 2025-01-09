@@ -13,7 +13,7 @@ func _ready() -> void:
 
 
 func generate_random_map():
-	clear_map()
+	_clear_map()
 	var new_map = _map_list.pick_random().instantiate()
 	%Map.add_child(new_map)
 	_current_map = new_map
@@ -29,7 +29,7 @@ func spawn_players(team_dict):
 	
 
 
-func clear_map():
+func _clear_map():
 	_current_map = null
 	for child in %Map.get_children():
 		child.queue_free()

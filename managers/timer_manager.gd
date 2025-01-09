@@ -14,7 +14,7 @@ func _physics_process(_delta: float) -> void:
 		label.text = "%.2f" % (timer.wait_time - timer.time_left)
 
 
-func get_current_time():
+func _get_current_time():
 	return (timer.wait_time - timer.time_left)
 	
 
@@ -51,14 +51,14 @@ func clear_round():
 		round_time_dict[id] = 0
 	
 
-func add_player_time(player_id, max = false):
-	print("%s: %s survived %s" % [name, player_id, get_current_time()])
-	if max:
+func add_player_time(player_id, max_time = false):
+	print("%s: %s survived %s" % [name, player_id, _get_current_time()])
+	if max_time:
 		round_time_dict[player_id] += timer.wait_time
 		total_time_dict[player_id] += timer.wait_time
 		return
-	round_time_dict[player_id] += get_current_time()
-	total_time_dict[player_id] += get_current_time()
+	round_time_dict[player_id] += _get_current_time()
+	total_time_dict[player_id] += _get_current_time()
 	
 
 func display_end_scores():

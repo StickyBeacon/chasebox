@@ -43,7 +43,7 @@ func hit_player(object):
 	
 	print("%s got hit by %s" % [player_id, object.name]) 
 	if team == Utils.Team.Runner:
-		kill_player()
+		_kill_player()
 	#else: TODO chasers geraakt door bad stuff? does bad stuff happen?
 		#%Movement.add_force(object.PUNCH*(global_position-object.global_position))
 		#object.remove()
@@ -59,7 +59,7 @@ func _on_chase_hitbox_body_entered(body: Node2D) -> void:
 		body.hit_player(self)
 		
 
-func kill_player():
+func _kill_player():
 	#TODO omdat er momenteel maar 2 spelers zijn sterft er nooit eigenlijk een speler. 
 	# miss ze teleporteren naar een "hell" ofzo in plaats van ze te doden?
 	# spawn wa particle effects die ze nalaten
