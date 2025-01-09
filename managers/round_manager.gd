@@ -4,27 +4,12 @@ class_name RoundManager
 var turn_count:int = 0
 var round_count:int = 0
 var max_round_count :int= 5
-# Voor totale game score bij te houden
-var game_score_dict = {}
-# Voor momentele ronde score bij te houden
-var round_time_dict = {}
-var total_time_dict = {}
 var turn_order = []
 # de spelers die gekozen worden, worden hierin toegevoegd. standaard op 1 en 2
 var chosen_players = []
 # 0 is chasers, 1 is runners
-var team_dict = {Team.Chaser: [], Team.Runner: []}
-var current_gamemode:GameMode = GameMode.Hunter
-
-enum Team {
-	Chaser,
-	Runner
-}
-
-enum GameMode {
-	Hunter, # 1 Chaser, de rest runners. Basic gamemode.
-	Prey # 1 Runner, de rest chasers. De enge gamemode.
-}
+var team_dict = {Utils.Team.Chaser: [], Utils.Team.Runner: []}
+var current_gamemode:Utils.GameMode = Utils.GameMode.Hunter
 
 
 func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
@@ -64,7 +49,7 @@ func next_round():
 		return
 
 	%MapManager.generate_random_map()
-	current_gamemode = GameMode.values().pick_random()
+	current_gamemode = Utils.GameMode.values().pick_random()
 	turn_order.reverse()
 	next_turn()
 	pass
@@ -77,7 +62,7 @@ func next_turn():
 	clear_turn()
 	#Als alle turns voorbij zijn, begin nieuwe "ronde"
 	if turn_count > turn_order.size():
-		calculate_round_points()
+		%TimerManager.calculate_round_points()
 		turn_count = 0
 		next_round()
 		return
@@ -85,22 +70,22 @@ func next_turn():
 	var chosen_id = turn_order[turn_count-1]
 	
 	# Enkel de Hunter gamemode for now
-	team_dict[Team.Chaser].append(chosen_id)
+	team_dict[Utils.Team.Chaser].append(chosen_id)
 	for player_id in chosen_players:
 		if player_id == chosen_id: continue
-		team_dict[Team.Runner].append(player_id)
+		team_dict[Utils.Team.Runner].append(player_id)
 	
 	#match(current_gamemode): TODO gamemodes?
-		#GameMode.Hunter:
-			#team_dict[Team.Chaser].append(chosen_id)
+		#Utils.GameMode.Hunter:
+			#team_dict[Utils.Team.Chaser].append(chosen_id)
 			#for player_id in chosen_players:
 				#if player_id == chosen_id: continue
-				#team_dict[Team.Runner].append(player_id)
-		#GameMode.Prey:
-			#team_dict[Team.Runner].append(chosen_id)
+				#team_dict[Utils.Team.Runner].append(player_id)
+		#Utils.GameMode.Prey:
+			#team_dict[Utils.Team.Runner].append(chosen_id)
 			#for player_id in chosen_players:
 				#if player_id == chosen_id: continue
-				#team_dict[Team.Chaser].append(player_id)
+				#team_dict[Utils.Team.Chaser].append(player_id)
 	
 	
 	# TODO maak maps bruh
@@ -118,18 +103,13 @@ func reset_values():
 	turn_count = 0
 	round_count = 0
 	turn_order = []
-	game_score_dict = {}
-	round_time_dict = {}
-	total_time_dict = {}
-	team_dict = {Team.Chaser: [], Team.Runner: []}
+	team_dict = {Utils.Team.Chaser: [], Utils.Team.Runner: []}
 
 
 func initialize_values():
 	for player_id in chosen_players:
 		var player :Player = %PlayerManager.get_player(player_id)
-		game_score_dict[player_id] = 0
-		round_time_dict[player_id] = 0
-		total_time_dict[player_id] = 0
+		%TimerManager.add_player(player_id)
 		if !player.player_died.is_connected(on_player_died):
 			player.player_died.connect(on_player_died)
 		
@@ -137,51 +117,31 @@ func initialize_values():
 
 func on_player_died(player_id):
 	var player :Player= %PlayerManager.get_player(player_id)
-	team_dict[player.get_team()].erase(player_id)
-	if !player.is_chaser:
-		add_round_time(player_id,%TimerManager.get_current_time())
+	team_dict[player.team].erase(player_id)
+	if player.team == Utils.Team.Runner:
+		%TimerManager.add_player_time(player_id)
 		#TODO Momenteel enkel geprogrammeerd voor 2 players
 		# Players worden dus niet verwijdert als ze sterven. Gewoon verplaatst.
 	
 	# Een team is volledig dood
-	if team_dict[player.get_team()].size() == 0:
+	if team_dict[player.team].size() == 0:
 		end_turn()
 		
-	elif player.is_chaser: #Speler is chaser en andere chaser leeft nog
+	elif player.team == Utils.Team.Chaser: #Speler is chaser en andere chaser leeft nog
 		printerr("%s: loser alert. Een chaser is gestorven? Bruh" % name)
 
 
-func add_round_time(player_id, time):
-	if team_dict[Team.Chaser].has(player_id):
-		printerr("%s: Chasers hebben geen timer om te scoren!" % name)
-	
-	print("%s: %s survived %s" % [name, player_id, time])
-	round_time_dict[player_id] += time
-	total_time_dict[player_id] += time
-
-
-func calculate_round_points():
-	#TODO Momenteel neemt het gewoon de max. Het gaat ervanuit dat er maar 1 max is
-	# Spelers kunnen tie-en :(
-	
-	var values = round_time_dict.values()
-	var player_id = round_time_dict.keys()[values.find(values.max())]
-	print("%s: %s got point this round!" % [name, player_id])
-	game_score_dict[player_id] += 1
-	
-
 func clear_turn(): # TODO Hier ook iets te doen met time? denkik?
-	team_dict = {Team.Chaser: [], Team.Runner: []}
+	team_dict = {Utils.Team.Chaser: [], Utils.Team.Runner: []}
 
 
 func clear_round():
-	for id in round_time_dict.keys():
-		round_time_dict[id] = 0
+	%TimerManager.clear_round()
 
 
 func _on_round_timer_timeout() -> void:
-	for id in team_dict[Team.Runner]:
-		add_round_time(id,%ActualTimer.wait_time)
+	for id in team_dict[Utils.Team.Runner]:
+		%TimerManager.add_player_time(id, true)
 		end_turn()
 
 
@@ -195,24 +155,17 @@ func end_turn():
 	%PlayerManager.toggle_all_players(false)
 	%TimerManager.reset_timer()
 	next_turn()
-	
 
 
 func end_game():
 	#TODO end game. show score. show total time. Options: menu, again
 	%PlayerManager.toggle_all_players(false)
-	for id in total_time_dict.keys():
-		print("%s: %s time is %s" % [name,id,total_time_dict[id]])
-	
-	var values = total_time_dict.values()
-	var player_id = total_time_dict.keys()[values.find(values.max())]
-	print("%s: %s won!" % [name,player_id])
+	%TimerManager.display_end_scores()
 	
 
 func restart_game():
 	#TODO eigenlijk gewoon game start zonder dat allerlei waardes worden aangepast
 	pass
-
 
 
 func wait(seconds: float) -> void:

@@ -21,10 +21,10 @@ func generate_random_map():
 
 
 func spawn_players(team_dict):
-	for id in team_dict[RoundManager.Team.Chaser] + team_dict[RoundManager.Team.Runner]:
-		var team = RoundManager.Team.Chaser if id in team_dict[RoundManager.Team.Chaser] else RoundManager.Team.Runner
+	for id in team_dict[Utils.Team.Chaser] + team_dict[Utils.Team.Runner]:
+		var team = Utils.Team.Chaser if id in team_dict[Utils.Team.Chaser] else Utils.Team.Runner
 		var player :Player= %PlayerManager.get_player(id)
-		player.is_chaser = true if team == RoundManager.Team.Chaser else false
+		player.team = team
 		player.global_position = _current_map.get_spawn(team)
 	
 

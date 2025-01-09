@@ -19,11 +19,12 @@ class_name Player
 			_:
 				printerr("%s: value %s is not valid playerid"% [name, value])
 		player_id = value
-@export var is_chaser :bool= false:
+@export var team :Utils.Team= Utils.Team.Runner:
 	set(value):
-		is_chaser = value
-		%ChaseHitbox.set_deferred("monitoring",value)
-		%ChaseSprite.set_deferred("visible",value) 
+		team = value
+		var _is_chaser = true if value == Utils.Team.Chaser else false
+		%ChaseHitbox.set_deferred("monitoring",_is_chaser)
+		%ChaseSprite.set_deferred("visible",_is_chaser) 
 
 @export var enabled :bool = false:
 	set(value):
@@ -31,7 +32,6 @@ class_name Player
 		%Movement.can_move = value
 		%PlayerCollision.set_deferred("disabled",!value)
 		%ChaseCollision.set_deferred("disabled",!value)
-		print("%s: %s" % [player_id,value])
 		visible = value
 
 
@@ -42,7 +42,7 @@ func hit_player(object):
 	if !enabled: return
 	
 	print("%s got hit by %s" % [player_id, object.name]) 
-	if !is_chaser:
+	if team == Utils.Team.Runner:
 		kill_player()
 	#else: TODO chasers geraakt door bad stuff? does bad stuff happen?
 		#%Movement.add_force(object.PUNCH*(global_position-object.global_position))
@@ -55,7 +55,7 @@ func hit_player(object):
 
 
 func _on_chase_hitbox_body_entered(body: Node2D) -> void:
-	if !body.is_chaser:
+	if body.team == Utils.Team.Runner:
 		body.hit_player(self)
 		
 
@@ -65,7 +65,3 @@ func kill_player():
 	# spawn wa particle effects die ze nalaten
 	print("%s: dies" % name)
 	player_died.emit(player_id)
-
-
-func get_team():
-	return RoundManager.Team.Chaser if is_chaser else RoundManager.Team.Runner
