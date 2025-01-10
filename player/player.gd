@@ -65,3 +65,4 @@ func _kill_player():
 	# spawn wa particle effects die ze nalaten
 	print("%s: dies" % name)
 	player_died.emit(player_id)
+	enabled = false

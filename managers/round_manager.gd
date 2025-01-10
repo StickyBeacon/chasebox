@@ -3,7 +3,7 @@ class_name RoundManager
 
 var _turn_count:int = 0
 var _round_count:int = 0
-var _max_round_count :int= 1
+var _max_round_count :int= 2
 var _turn_order = []
 # de spelers die gekozen worden, worden hierin toegevoegd. standaard op 1 en 2
 var _chosen_players = []
@@ -14,7 +14,7 @@ var _current_gamemode:Utils.GameMode = Utils.GameMode.Hunter
 
 func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
 	if event.is_action_pressed("ui_focus_next"):
-		_chosen_players = [1,2]
+		_chosen_players = [1,2,3]
 		for id in _chosen_players:
 			%PlayerManager.add_player(id)
 		start_game()
