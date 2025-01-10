@@ -68,3 +68,16 @@ func display_end_scores():
 	var values = total_time_dict.values()
 	var winner_id = total_time_dict.keys()[values.find(values.max())]
 	print("%s: %s won!" % [name,winner_id])
+	
+	var order_array = []
+	var value_ordered = total_time_dict.values()
+	value_ordered.sort()
+	value_ordered.reverse()
+	for i in value_ordered.size():
+		var value = value_ordered[i]
+		for key in total_time_dict.keys():
+			if total_time_dict[key] == value and key not in order_array:
+				order_array.append(key)
+	%EndScreenList.set_players(order_array,total_time_dict)
+
+	

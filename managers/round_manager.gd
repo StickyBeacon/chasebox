@@ -3,7 +3,7 @@ class_name RoundManager
 
 var _turn_count:int = 0
 var _round_count:int = 0
-var _max_round_count :int= 5
+var _max_round_count :int= 1
 var _turn_order = []
 # de spelers die gekozen worden, worden hierin toegevoegd. standaard op 1 en 2
 var _chosen_players = []
@@ -66,7 +66,16 @@ func _next_turn():
 		_turn_count = 0
 		_next_round()
 		return
-		
+	
+	# Current Turn overview
+	get_tree().paused = true
+	%TurnIndicator.set_players(_turn_order,_turn_count)
+	%IngameUIManager.set_turn_ui(true, "let game begin")
+	await _wait(1)
+	%IngameUIManager.set_turn_ui(false)
+	get_tree().paused = false
+	
+	
 	var chosen_id = _turn_order[_turn_count-1]
 	
 	# Enkel de Hunter gamemode for now
@@ -104,6 +113,7 @@ func _reset_values():
 	_round_count = 0
 	_turn_order = []
 	_team_dict = {Utils.Team.Chaser: [], Utils.Team.Runner: []}
+	%EndScreen.visible = false
 
 
 func _initialize_values():
@@ -148,10 +158,7 @@ func _on_round_timer_timeout() -> void:
 func _end_turn():
 	#TODO Toon hier de freeze en wat er gebeurt?
 	get_tree().paused = true
-	set_turn_indicator()
-	%IngameUIManager.set_turn_ui(true, "booger,s")
-	await _wait(1)
-	%IngameUIManager.set_turn_ui(false)
+	await _wait(.2)
 	get_tree().paused = false
 	%PlayerManager.toggle_all_players(false)
 	%TimerManager.reset_timer()
@@ -161,8 +168,9 @@ func _end_turn():
 func _end_game():
 	#TODO end game. show score. show total time. Options: menu, again
 	%PlayerManager.toggle_all_players(false)
-	%TimerManager.display_end_scores()
 	
+	%TimerManager.display_end_scores()
+	%EndScreen.visible = true
 
 func restart_game():
 	#TODO eigenlijk gewoon game start zonder dat allerlei waardes worden aangepast
@@ -171,16 +179,3 @@ func restart_game():
 
 func _wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
-	
-
-func set_turn_indicator():
-	var next_count = _turn_count + 1
-	var next_order = _turn_order.duplicate(true)
-	#Als alle turns voorbij zijn, begin nieuwe "ronde"
-	if next_count > next_order.size():
-		next_count = 1
-		next_order.reverse()
-		%TurnIndicator.set_players(next_order,next_count)
-		return
-		
-	%TurnIndicator.set_players(next_order,next_count)
