@@ -14,7 +14,7 @@ var _current_gamemode:Utils.GameMode = Utils.GameMode.Hunter
 
 func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
 	if event.is_action_pressed("ui_focus_next"):
-		_chosen_players = [1,2,3]
+		_chosen_players = [1,2]
 		for id in _chosen_players:
 			%PlayerManager.add_player(id)
 		start_game()
@@ -70,7 +70,7 @@ func _next_turn():
 	# Current Turn overview
 	get_tree().paused = true
 	%TurnIndicator.set_players(_turn_order,_turn_count)
-	%IngameUIManager.set_turn_ui(true, "let game begin")
+	%IngameUIManager.set_turn_ui(true, _round_count ,_turn_count)
 	await _wait(1)
 	%IngameUIManager.set_turn_ui(false)
 	get_tree().paused = false

@@ -32,6 +32,7 @@ layout_mode = 2
 texture = ExtResource("2_nh25s")
 
 [node name="TimeLabel" type="Label" parent="2"]
+layout_mode = 0
 offset_left = 50.0
 offset_top = 15.0
 offset_right = 90.0
@@ -45,6 +46,7 @@ layout_mode = 2
 texture = ExtResource("3_ivygu")
 
 [node name="TimeLabel" type="Label" parent="3"]
+layout_mode = 0
 offset_left = 50.0
 offset_top = 15.0
 offset_right = 90.0
@@ -58,6 +60,7 @@ layout_mode = 2
 texture = ExtResource("4_byril")
 
 [node name="TimeLabel" type="Label" parent="4"]
+layout_mode = 0
 offset_left = 50.0
 offset_top = 15.0
 offset_right = 90.0

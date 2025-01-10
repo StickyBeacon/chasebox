@@ -1,7 +1,7 @@
 extends Node2D
 class_name BaseMap
 
-const RANDOM_ADDITION = 5
+const RANDOM_ADDITION = 20
 
 
 func get_spawn(team:Utils.Team):
