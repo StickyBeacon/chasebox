@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://gu2dwpe4sb72"]
+[gd_scene load_steps=8 format=3 uid="uid://gu2dwpe4sb72"]
 
-[ext_resource type="Script" path="res://managers/timer_manager.gd" id="1_7i13x"]
-[ext_resource type="Script" path="res://managers/round_manager.gd" id="1_pny5p"]
-[ext_resource type="Script" path="res://managers/player_manager.gd" id="2_23jyq"]
-[ext_resource type="Script" path="res://managers/ingame_ui_manager.gd" id="3_ajy73"]
-[ext_resource type="Script" path="res://managers/map_manager.gd" id="5_571it"]
+[ext_resource type="Script" path="res://managers/non_globals/timer_manager.gd" id="1_7i13x"]
+[ext_resource type="Script" path="res://managers/non_globals/round_manager.gd" id="1_pny5p"]
+[ext_resource type="Script" path="res://managers/non_globals/ingame_ui_manager.gd" id="3_ajy73"]
+[ext_resource type="Script" path="res://managers/non_globals/map_manager.gd" id="5_571it"]
 [ext_resource type="PackedScene" uid="uid://dosdfkupctoop" path="res://ui/turn_indicator.tscn" id="6_duwty"]
 [ext_resource type="PackedScene" uid="uid://bum10leeftxjx" path="res://ui/end_screen_list.tscn" id="7_1q6bt"]
 
@@ -27,10 +26,6 @@ one_shot = true
 unique_name_in_owner = true
 process_mode = 3
 script = ExtResource("1_pny5p")
-
-[node name="PlayerManager" type="Node" parent="Managers"]
-unique_name_in_owner = true
-script = ExtResource("2_23jyq")
 
 [node name="IngameUIManager" type="Node" parent="Managers"]
 unique_name_in_owner = true

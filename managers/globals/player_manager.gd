@@ -10,21 +10,20 @@ func add_player(player_id): # zou ook extra info kunnen bevatten (welke items)
 		return
 	elif not player_id in [1,2,3,4]:
 		printerr("%s: %s is geen geldig playerid" % [name, player_id])
+		return
 	
 	var new_player :Player = player_scene.instantiate()
 	new_player.player_id = player_id
 	new_player.enabled = false
 	# Insert hier extra dingen met de items en andere options (handicaps?)
-	%PlayerNode.add_child(new_player)
-	#TODO waar moeten de spelers naartoe als ze sterven?
-	new_player.position = Vector2(0,0)
 	player_dict[player_id] = new_player
 	
 
 
 func clear_players():
-	for player:Player in %PlayerNode.get_children():
-		player.queue_free()
+	for child in get_children():
+		queue_free()
+		
 	player_dict = {}
 
 
@@ -47,3 +46,13 @@ func toggle_player(id, value):
 func reset_players():
 	for id in player_dict:
 		player_dict[id].velocity = Vector2.ZERO
+
+
+func spawn_players():
+	for player in player_dict.values():
+		add_child(player)
+		player.position = Vector2(0,0)
+
+
+func is_empty():
+	return player_dict.is_empty()

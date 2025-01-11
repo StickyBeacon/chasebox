@@ -1,10 +1,170 @@
-[gd_scene format=3 uid="uid://52rj3hhib524"]
+[gd_scene load_steps=2 format=3 uid="uid://52rj3hhib524"]
+
+[ext_resource type="Script" path="res://spaces/main_menu.gd" id="1_jiwr8"]
 
 [node name="Menu" type="Node2D"]
+script = ExtResource("1_jiwr8")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
 
 [node name="StartGame" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="BackButton" type="Button" parent="CanvasLayer/StartGame"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 77.0
+offset_top = 84.0
+offset_right = 227.0
+offset_bottom = 184.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Back"
+
+[node name="StartButton" type="Button" parent="CanvasLayer/StartGame"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 77.0
+offset_top = -154.0
+offset_right = 227.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Start"
+
+[node name="RoundCount" type="SpinBox" parent="CanvasLayer/StartGame"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 97.0
+offset_right = 180.063
+offset_bottom = 31.0
+scale = Vector2(1.93884, 1.93884)
+min_value = 1.0
+max_value = 20.0
+value = 1.0
+
+[node name="MenuLabel" type="Label" parent="CanvasLayer/StartGame"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = -222.0
+offset_right = 137.0
+offset_bottom = -199.0
+theme_override_font_sizes/font_size = 41
+text = "GAME START"
+
+[node name="MainMenu" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = -222.0
+offset_right = 348.0
+offset_bottom = -165.0
+theme_override_font_sizes/font_size = 41
+text = "MAIN MENU"
+
+[node name="Buttons" type="VBoxContainer" parent="CanvasLayer/MainMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 176.0
+offset_top = -50.5
+offset_right = 246.0
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/MainMenu/Buttons"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Play"
+
+[node name="SettingsButton" type="Button" parent="CanvasLayer/MainMenu/Buttons"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/MainMenu/Buttons"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Quit"
+
+[node name="Settings" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="MenuLabel" type="Label" parent="CanvasLayer/Settings"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = -222.0
+offset_right = 348.0
+offset_bottom = -165.0
+theme_override_font_sizes/font_size = 41
+text = "SETTINGS"
+
+[node name="BackButton" type="Button" parent="CanvasLayer/Settings"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 110.0
+offset_top = 84.0
+offset_right = 260.0
+offset_bottom = 184.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Back"
+
+[node name="CharacterSelection" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -18,8 +178,45 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RoundCount" type="SpinBox" parent="CanvasLayer/StartGame"]
-layout_mode = 0
-offset_left = 97.0
-offset_right = 180.063
-offset_bottom = 31.0
+[node name="StartButton" type="Button" parent="CanvasLayer/CharacterSelection"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = 172.0
+offset_right = 75.0
+offset_bottom = 272.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Start"
+
+[node name="BackButton" type="Button" parent="CanvasLayer/CharacterSelection"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -536.0
+offset_top = -292.0
+offset_right = -386.0
+offset_bottom = -192.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Back"
+
+[connection signal="button_up" from="CanvasLayer/StartGame/BackButton" to="." method="change_menu" binds= [&"MainMenu"]]
+[connection signal="button_up" from="CanvasLayer/StartGame/StartButton" to="." method="change_menu" binds= [&"CharacterSelection"]]
+[connection signal="button_up" from="CanvasLayer/MainMenu/Buttons/PlayButton" to="." method="change_menu" binds= [&"StartGame"]]
+[connection signal="button_up" from="CanvasLayer/MainMenu/Buttons/SettingsButton" to="." method="change_menu" binds= [&"Settings"]]
+[connection signal="button_up" from="CanvasLayer/MainMenu/Buttons/QuitButton" to="." method="_on_quit_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/Settings/BackButton" to="." method="change_menu" binds= [&"MainMenu"]]
+[connection signal="button_up" from="CanvasLayer/CharacterSelection/StartButton" to="." method="_on_real_start_button_up"]
+[connection signal="button_up" from="CanvasLayer/CharacterSelection/BackButton" to="." method="change_menu" binds= [&"StartGame"]]

@@ -3,7 +3,7 @@ class_name RoundManager
 
 var _turn_count:int = 0
 var _round_count:int = 0
-var _max_round_count :int= 2
+@onready var _max_round_count :int= GameSettings.rounds
 var _turn_order = []
 # de spelers die gekozen worden, worden hierin toegevoegd. standaard op 1 en 2
 var _chosen_players = []
@@ -14,9 +14,10 @@ var _current_gamemode:Utils.GameMode = Utils.GameMode.Hunter
 
 func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
 	if event.is_action_pressed("ui_focus_next"):
-		_chosen_players = [1,2]
-		for id in _chosen_players:
-			%PlayerManager.add_player(id)
+		if PlayerManager.is_empty():
+			_chosen_players = [1,2]
+			for id in _chosen_players:
+				PlayerManager.add_player(id)
 		start_game()
 
 
@@ -31,6 +32,7 @@ func start_game():
 	#TODO inladen van UI en characters op basis van de gekozen spelers
 	print("%s: Starting game" % name)
 	# Reset alle in-game-bepaalde waarden
+	PlayerManager.spawn_players()
 	_reset_values()
 	_initialize_values()
 	# Shuffle turn order voor dit spel
@@ -47,7 +49,7 @@ func _next_round():
 	if _round_count > _max_round_count:
 		_end_game()
 		return
-
+	
 	%MapManager.generate_random_map()
 	_current_gamemode = Utils.GameMode.values().pick_random()
 	_turn_order.reverse()
@@ -58,7 +60,7 @@ func _next_round():
 func _next_turn():
 	_turn_count += 1
 	print("%s: turn %s round %s" % [name, _turn_count, _round_count])
-	%PlayerManager.reset_players()
+	PlayerManager.reset_players()
 	_clear_turn()
 	#Als alle turns voorbij zijn, begin nieuwe "ronde"
 	if _turn_count > _turn_order.size():
@@ -99,13 +101,13 @@ func _next_turn():
 	
 	# TODO maak maps bruh
 	# Initialize player variables based on team
-	%PlayerManager.toggle_all_players(false)
+	PlayerManager.toggle_all_players(false)
 	%MapManager.spawn_players(_team_dict)
 	# Game starts
 	await _wait(.3) #TODO maak het hier duidelijk wie waar spawnt? idk man
 	%TimerManager.start_timer()
 	
-	%PlayerManager.toggle_all_players(true)
+	PlayerManager.toggle_all_players(true)
 
 
 func _reset_values():
@@ -118,7 +120,7 @@ func _reset_values():
 
 func _initialize_values():
 	for player_id in _chosen_players:
-		var player :Player = %PlayerManager.get_player(player_id)
+		var player :Player = PlayerManager.get_player(player_id)
 		%TimerManager.add_player(player_id)
 		if !player.player_died.is_connected(on_player_died):
 			player.player_died.connect(on_player_died)
@@ -126,7 +128,7 @@ func _initialize_values():
 
 
 func on_player_died(player_id):
-	var player :Player= %PlayerManager.get_player(player_id)
+	var player :Player= PlayerManager.get_player(player_id)
 	_team_dict[player.team].erase(player_id)
 	if player.team == Utils.Team.Runner:
 		%TimerManager.add_player_time(player_id)
@@ -160,14 +162,14 @@ func _end_turn():
 	get_tree().paused = true
 	await _wait(.2)
 	get_tree().paused = false
-	%PlayerManager.toggle_all_players(false)
+	PlayerManager.toggle_all_players(false)
 	%TimerManager.reset_timer()
 	_next_turn()
 
 
 func _end_game():
 	#TODO end game. show score. show total time. Options: menu, again
-	%PlayerManager.toggle_all_players(false)
+	PlayerManager.toggle_all_players(false)
 	
 	%TimerManager.display_end_scores()
 	%EndScreen.visible = true

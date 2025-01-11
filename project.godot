@@ -15,6 +15,11 @@ run/main_scene="res://spaces/arena.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PlayerManager="*res://managers/globals/player_manager.gd"
+GameSettings="*res://managers/globals/game_settings.gd"
+
 [display]
 
 window/stretch/mode="viewport"
