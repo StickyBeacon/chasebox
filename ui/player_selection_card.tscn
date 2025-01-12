@@ -1,11 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://bcgrom877b7oq"]
+[gd_scene load_steps=3 format=3 uid="uid://bcgrom877b7oq"]
 
+[ext_resource type="Script" path="res://ui/player_selection_card.gd" id="1_las40"]
 [ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="1_v36o8"]
 
 [node name="PlayerSelectionCard" type="VBoxContainer"]
 offset_right = 150.0
 offset_bottom = 318.0
 alignment = 1
+script = ExtResource("1_las40")
 
 [node name="Name" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(20, 38.44)
@@ -28,11 +30,13 @@ grow_vertical = 2
 text = "No Player"
 
 [node name="PlayerIcon" type="TextureRect" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 texture = ExtResource("1_v36o8")
 
 [node name="Handicap" type="ColorRect" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 38.44)
 layout_mode = 2
 color = Color(0.190762, 0.190762, 0.190762, 1)
@@ -53,6 +57,7 @@ grow_vertical = 2
 text = "No Handicap"
 
 [node name="ReadyColor" type="ColorRect" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 38.44)
 layout_mode = 2
 color = Color(0.190762, 0.190762, 0.190762, 1)
@@ -73,6 +78,7 @@ grow_vertical = 2
 text = "Not ready"
 
 [node name="Quit" type="ColorRect" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 38.44)
 layout_mode = 2
 color = Color(0.190762, 0.190762, 0.190762, 1)
