@@ -17,15 +17,10 @@ func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
 		if PlayerManager.is_empty():
 			_chosen_players = [1,2]
 			for id in _chosen_players:
-				PlayerManager.add_player(id)
+				PlayerManager.add_player(id,id)
+		else:
+			_chosen_players = PlayerManager.player_dict.keys()
 		start_game()
-
-
-# Voor het zetten van de spelers, max round count etc. 
-func set_game_values(player_array:Array, new_round_count:int):
-	_chosen_players = player_array
-	_max_round_count = new_round_count
-	pass
 
 
 func start_game():

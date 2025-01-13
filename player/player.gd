@@ -1,6 +1,11 @@
 extends CharacterBody2D
 class_name Player
 
+@export var controller_id = 0:
+	set(value):
+		if not value in [1,2,3,4]:
+			printerr("%s: controller id %s not possible" % [name, value])
+		controller_id = value
 @export var player_id = 0:
 	set(value):
 		match(value):

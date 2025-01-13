@@ -20,6 +20,10 @@ func _ready() -> void:
 
 func change_menu(node_name:StringName):
 	_current_ui = %CanvasLayer.find_child(node_name)
+	%CharacterSelection.clear_everything()
+	%CharacterSelection.can_select = false
+	if _current_ui == %CharacterSelection:
+		%CharacterSelection.can_select = true
 	pass
 
 
@@ -28,7 +32,6 @@ func _on_quit_button_button_up() -> void:
 	get_tree().quit()
 
 
-func _on_real_start_button_up() -> void:
-	#PlayerManager.add_player(0)
+func start_game() -> void:
 	GameSettings.rounds = %RoundCount.value
 	get_tree().change_scene_to_packed(ARENA_SCENE)

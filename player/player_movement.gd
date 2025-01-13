@@ -24,7 +24,7 @@ var can_move:bool = false
 
 func _ready() -> void:
 	for key in input_dict.keys():
-		input_dict[key] = key + str(player.player_id)
+		input_dict[key] = key + str(player.controller_id)
 
 
 func _input(event: InputEvent) -> void:

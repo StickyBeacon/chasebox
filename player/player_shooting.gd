@@ -10,7 +10,7 @@ const AIM_LERP_SPEED = 15
 
 func _ready() -> void:
 	for key in _input_dict.keys():
-		_input_dict[key] = key + str(player.player_id)
+		_input_dict[key] = key + str(player.controller_id)
 
 
 func _input(event: InputEvent) -> void:

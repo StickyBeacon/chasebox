@@ -4,7 +4,7 @@ extends Node
 var player_dict = {}
 
 
-func add_player(player_id): # zou ook extra info kunnen bevatten (welke items)
+func add_player(controller_id,player_id): # zou ook extra info kunnen bevatten (welke items)
 	if player_dict.keys().has(player_id):
 		printerr("%s: player id %s bestaat al in dict!" % [name, player_id])
 		return
@@ -14,6 +14,7 @@ func add_player(player_id): # zou ook extra info kunnen bevatten (welke items)
 	
 	var new_player :Player = player_scene.instantiate()
 	new_player.player_id = player_id
+	new_player.controller_id = controller_id
 	new_player.enabled = false
 	# Insert hier extra dingen met de items en andere options (handicaps?)
 	player_dict[player_id] = new_player
