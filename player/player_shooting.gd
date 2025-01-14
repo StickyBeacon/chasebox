@@ -14,6 +14,7 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if !player.enabled: return
 	if event.is_action_pressed(_input_dict["shoot"]):
 		shoot()
 

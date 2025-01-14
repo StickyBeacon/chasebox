@@ -4,7 +4,7 @@ extends Node
 var player_dict = {}
 
 
-func add_player(controller_id,player_id): # zou ook extra info kunnen bevatten (welke items)
+func add_player(controller_id,player_id, handicap:Utils.Handicap = Utils.Handicap.None): # zou ook extra info kunnen bevatten (welke items)
 	if player_dict.keys().has(player_id):
 		printerr("%s: player id %s bestaat al in dict!" % [name, player_id])
 		return
@@ -16,6 +16,7 @@ func add_player(controller_id,player_id): # zou ook extra info kunnen bevatten (
 	new_player.player_id = player_id
 	new_player.controller_id = controller_id
 	new_player.enabled = false
+	new_player.handicap = handicap
 	# Insert hier extra dingen met de items en andere options (handicaps?)
 	player_dict[player_id] = new_player
 	
@@ -23,7 +24,7 @@ func add_player(controller_id,player_id): # zou ook extra info kunnen bevatten (
 
 func clear_players():
 	for child in get_children():
-		queue_free()
+		child.queue_free()
 		
 	player_dict = {}
 
@@ -51,6 +52,8 @@ func reset_players():
 
 func spawn_players():
 	for player in player_dict.values():
+		if player.get_parent(): return
+		
 		add_child(player)
 		player.position = Vector2(0,0)
 

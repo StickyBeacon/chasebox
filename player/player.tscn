@@ -62,16 +62,16 @@ collision_layer = 0
 collision_mask = 2
 monitoring = false
 
-[node name="ChaseCollision" type="CollisionShape2D" parent="ChaseHitbox"]
-unique_name_in_owner = true
-shape = SubResource("CircleShape2D_3coyb")
-
-[node name="ChaseSprite" type="Sprite2D" parent="."]
+[node name="ChaseSprite" type="Sprite2D" parent="ChaseHitbox"]
 unique_name_in_owner = true
 modulate = Color(0.972873, 2.11775e-06, 0.54633, 0.211765)
 z_index = 10
 scale = Vector2(1.02245, 1.04867)
 texture = ExtResource("1_q0tl4")
+
+[node name="ChaseCollision" type="CollisionShape2D" parent="ChaseHitbox"]
+unique_name_in_owner = true
+shape = SubResource("CircleShape2D_3coyb")
 
 [connection signal="timeout" from="Timers/JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
 [connection signal="body_entered" from="ChaseHitbox" to="." method="_on_chase_hitbox_body_entered"]

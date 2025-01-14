@@ -1,6 +1,7 @@
 extends Node2D
 
-const ARENA_SCENE = preload("res://spaces/arena.tscn")
+@onready var arena_scene = load("res://spaces/arena.tscn")
+
 # Dit script zal zorgen voor welke UI's wanneer actief zijn
 @onready var _current_ui :Control = %MainMenu:
 	set(new_ui):
@@ -34,4 +35,4 @@ func _on_quit_button_button_up() -> void:
 
 func start_game() -> void:
 	GameSettings.rounds = %RoundCount.value
-	get_tree().change_scene_to_packed(ARENA_SCENE)
+	get_tree().change_scene_to_packed(arena_scene)

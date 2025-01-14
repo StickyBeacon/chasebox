@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://gu2dwpe4sb72"]
+[gd_scene load_steps=10 format=3 uid="uid://gu2dwpe4sb72"]
 
 [ext_resource type="Script" path="res://managers/non_globals/timer_manager.gd" id="1_7i13x"]
 [ext_resource type="Script" path="res://managers/non_globals/round_manager.gd" id="1_pny5p"]
 [ext_resource type="Script" path="res://managers/non_globals/ingame_ui_manager.gd" id="3_ajy73"]
 [ext_resource type="Script" path="res://managers/non_globals/map_manager.gd" id="5_571it"]
+[ext_resource type="Script" path="res://managers/non_globals/trauma_manager.gd" id="5_kvvfj"]
 [ext_resource type="PackedScene" uid="uid://dosdfkupctoop" path="res://ui/turn_indicator.tscn" id="6_duwty"]
+[ext_resource type="Script" path="res://managers/non_globals/pause_manager.gd" id="6_lksqt"]
 [ext_resource type="PackedScene" uid="uid://bum10leeftxjx" path="res://ui/end_screen_list.tscn" id="7_1q6bt"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_di7i8"]
@@ -34,6 +36,16 @@ script = ExtResource("3_ajy73")
 [node name="MapManager" type="Node" parent="Managers"]
 unique_name_in_owner = true
 script = ExtResource("5_571it")
+
+[node name="TraumaManager" type="Node" parent="Managers"]
+unique_name_in_owner = true
+process_mode = 3
+script = ExtResource("5_kvvfj")
+
+[node name="PauseManager" type="Node" parent="Managers"]
+unique_name_in_owner = true
+process_mode = 3
+script = ExtResource("6_lksqt")
 
 [node name="PlayerNode" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -71,6 +83,7 @@ rotation = -1.5708
 shape = SubResource("WorldBoundaryShape2D_di7i8")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
 scale = Vector2(1, 0.428172)
 
 [node name="GameUI" type="CanvasLayer" parent="."]
@@ -178,4 +191,66 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "GameEnd!"
 
+[node name="PauseScreen" type="Control" parent="GameUI"]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="GameUI/PauseScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1372.0
+offset_top = -678.0
+offset_right = 1372.0
+offset_bottom = 678.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.388235)
+
+[node name="Paus" type="VBoxContainer" parent="GameUI/PauseScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -157.0
+offset_top = -161.5
+offset_right = 157.0
+offset_bottom = 161.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="GameUI/PauseScreen/Paus"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 76
+text = "PAUSED!"
+horizontal_alignment = 1
+
+[node name="Continue" type="Button" parent="GameUI/PauseScreen/Paus"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 71
+text = "RESUME"
+
+[node name="Quit" type="Button" parent="GameUI/PauseScreen/Paus"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 71
+text = "QUIT"
+
 [connection signal="timeout" from="Managers/TimerManager/ActualTimer" to="Managers/RoundManager" method="_on_round_timer_timeout"]
+[connection signal="button_up" from="GameUI/PauseScreen/Paus/Continue" to="Managers/PauseManager" method="_on_continue_button_up"]
+[connection signal="button_up" from="GameUI/PauseScreen/Paus/Quit" to="Managers/PauseManager" method="_on_quit_button_up"]

@@ -2,6 +2,7 @@ extends Node
 
 @onready var player :Player = $"../.."
 
+var chaser_extra_speed = 20.0
 const SPEED = 500.0
 const AIR_ACCEL = 10.0
 const GROUND_GRIP = 3000.0
@@ -63,14 +64,16 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis(input_dict["left"],input_dict["right"])
 	
 	# Apply movement 
+	var current_speed = SPEED if player.team == Utils.Team.Runner else SPEED + chaser_extra_speed
+	
 	if player.is_on_floor():
 		if direction:
-			player.velocity.x = move_toward(player.velocity.x,(direction * SPEED), delta*GROUND_GRIP)
+			player.velocity.x = move_toward(player.velocity.x,(direction * current_speed), delta*GROUND_GRIP)
 		else:
 			player.velocity.x = move_toward(player.velocity.x, 0, GROUND_GRIP*delta)
 	else:
 		if direction:
-			player.velocity.x = lerp(player.velocity.x, JUMP_EXP_MODIFIER * player.velocity.x + (direction * SPEED), delta*AIR_ACCEL)
+			player.velocity.x = lerp(player.velocity.x, JUMP_EXP_MODIFIER * player.velocity.x + (direction * current_speed), delta*AIR_ACCEL)
 	
 	# The usual
 	player.move_and_slide()

@@ -39,6 +39,20 @@ class_name Player
 		%ChaseCollision.set_deferred("disabled",!value)
 		visible = value
 
+var handicap:Utils.Handicap = Utils.Handicap.None:
+	set(value):
+		match(value):
+			Utils.Handicap.None: # Nothing
+				pass
+			Utils.Handicap.SmallerSaw:
+				%ChaseHitbox.scale *= .5
+			Utils.Handicap.BiggerSaw:
+				%ChaseHitbox.scale *= 1.5
+			Utils.Handicap.Slowdown:
+				%Movement.chaser_extra_speed = -100
+			Utils.Handicap.Speedup:
+				%Movement.chaser_extra_speed = 200
+
 
 signal player_died(id)
 

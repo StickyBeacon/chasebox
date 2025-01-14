@@ -61,6 +61,7 @@ func _input(event: InputEvent) -> void:
 func activate(item):
 	match(item):
 		"PlayerIcon":
+			if ready_to_play: return
 			# claim player icon
 			if !has_chosen_character: 
 				if character_select.choose_character(controller_id,icon_scroll_index+1):
@@ -73,13 +74,14 @@ func activate(item):
 				has_chosen_character = false
 				%PlayerIcon.modulate = Color(1,1,1)
 		"Handicap":
+			if ready_to_play: return
 			# choose handicap
 			if !has_chosen_handicap: 
-				#TODO select handicap
+				character_select.choose_handicap(controller_id,handicap_scroll_index)
 				has_chosen_handicap = true
 				%Handicap.modulate = Color(1,1,0)
 			else:
-				#TODO unselect handicap
+				character_select.choose_handicap(controller_id,Utils.Handicap.None)
 				has_chosen_handicap = false
 				%Handicap.modulate = Color(1,1,1)
 			pass
@@ -95,6 +97,8 @@ func activate(item):
 				%ReadyColor.modulate = Color(1,0,0)
 				%ReadyLabel.text = "Not ready"
 		"Quit":
+			if ready_to_play: return
+			
 			character_select.remove_player(controller_id)
 		"Start":
 			# start the game

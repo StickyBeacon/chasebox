@@ -5,6 +5,7 @@ var current_controllers = {}
 @onready var menu = $"../.."
 var can_select = false
 var chosen_characters = {}
+var chosen_handicaps = {}
 
 
 func _input(event: InputEvent) -> void:
@@ -47,8 +48,10 @@ func attempt_start_game():
 
 func clear_everything():
 	for card in current_controllers.values():
-		card.set_controller(-1)
+		card.set_active(false)
 	current_controllers.clear()
+	chosen_characters.clear()
+	chosen_handicaps.clear()
 
 
 func choose_character(controller_id,character_id):
@@ -63,7 +66,12 @@ func deselect_character(controller_id):
 	chosen_characters.erase(controller_id)
 
 
+func choose_handicap(controller_id,handicap):
+	chosen_handicaps[controller_id] = handicap
+
+
 func add_characters():
 	for controller_id in chosen_characters.keys():
 		var character_id = chosen_characters[controller_id]
-		PlayerManager.add_player(controller_id,character_id)
+		var handicap = chosen_handicaps[controller_id]
+		PlayerManager.add_player(controller_id,character_id,handicap)

@@ -10,6 +10,7 @@ var _chosen_players = []
 # 0 is chasers, 1 is runners
 var _team_dict = {Utils.Team.Chaser: [], Utils.Team.Runner: []}
 var _current_gamemode:Utils.GameMode = Utils.GameMode.Hunter
+var is_in_game = false
 
 
 func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
@@ -101,7 +102,7 @@ func _next_turn():
 	# Game starts
 	await _wait(.3) #TODO maak het hier duidelijk wie waar spawnt? idk man
 	%TimerManager.start_timer()
-	
+	is_in_game = true
 	PlayerManager.toggle_all_players(true)
 
 
@@ -123,6 +124,7 @@ func _initialize_values():
 
 
 func on_player_died(player_id):
+	%TraumaManager.add_trauma(1)
 	var player :Player= PlayerManager.get_player(player_id)
 	_team_dict[player.team].erase(player_id)
 	if player.team == Utils.Team.Runner:
@@ -153,6 +155,7 @@ func _on_round_timer_timeout() -> void:
 
 
 func _end_turn():
+	is_in_game = false
 	#TODO Toon hier de freeze en wat er gebeurt?
 	get_tree().paused = true
 	await _wait(.2)
