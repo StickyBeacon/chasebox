@@ -100,3 +100,7 @@ func _activate_jump():
 
 func add_force(force:Vector2):
 	player.velocity += force
+
+
+func is_moving():
+	return false if Input.get_axis(input_dict["left"],input_dict["right"]) == 0 else true

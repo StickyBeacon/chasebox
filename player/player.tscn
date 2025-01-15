@@ -1,33 +1,34 @@
-[gd_scene load_steps=18 format=3 uid="uid://ce8oxjeft3feq"]
+[gd_scene load_steps=19 format=3 uid="uid://ce8oxjeft3feq"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_bt2nw"]
 [ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="1_q0tl4"]
 [ext_resource type="Script" path="res://player/player_movement.gd" id="3_4uyti"]
 [ext_resource type="Script" path="res://player/player_shooting.gd" id="4_y48kl"]
-[ext_resource type="Texture2D" uid="uid://8t7m5pij44ai" path="res://assets/images/Queen/Air1.png" id="5_bsww1"]
-[ext_resource type="Texture2D" uid="uid://c1g4dpomgvfc" path="res://assets/images/Queen/Idle1.png" id="5_t1qqu"]
-[ext_resource type="Texture2D" uid="uid://cd6vopmwi1kyh" path="res://assets/images/Queen/Idle2.png" id="6_dr8du"]
-[ext_resource type="Texture2D" uid="uid://bi2aq251gc8hy" path="res://assets/images/Queen/Air2.png" id="6_fgra0"]
-[ext_resource type="Texture2D" uid="uid://fdxc10t3fxvv" path="res://assets/images/Queen/Jump1.png" id="9_6wwsa"]
-[ext_resource type="Texture2D" uid="uid://oudqsf0f5qlp" path="res://assets/images/Queen/Roll1.png" id="10_fwce3"]
-[ext_resource type="Texture2D" uid="uid://dcoymh84li4g7" path="res://assets/images/Queen/Roll2.png" id="11_3p2rg"]
-[ext_resource type="Texture2D" uid="uid://ljjgijmpxd86" path="res://assets/images/Queen/Run1.png" id="12_sfxtd"]
-[ext_resource type="Texture2D" uid="uid://himqjidn3nkj" path="res://assets/images/Queen/Run2.png" id="13_3rxsj"]
-[ext_resource type="Texture2D" uid="uid://bnoie3c8vytcm" path="res://assets/images/Queen/Wall.png" id="14_6ytq1"]
+[ext_resource type="Texture2D" uid="uid://c1g4dpomgvfc" path="res://assets/images/Queen/Idle1.png" id="5_fqvax"]
+[ext_resource type="Script" path="res://player/animation_manager.gd" id="5_hwcfy"]
+[ext_resource type="Texture2D" uid="uid://8t7m5pij44ai" path="res://assets/images/Queen/Air1.png" id="5_m4uwu"]
+[ext_resource type="Texture2D" uid="uid://cd6vopmwi1kyh" path="res://assets/images/Queen/Idle2.png" id="6_4e5a3"]
+[ext_resource type="Texture2D" uid="uid://bi2aq251gc8hy" path="res://assets/images/Queen/Air2.png" id="6_41fis"]
+[ext_resource type="Texture2D" uid="uid://fdxc10t3fxvv" path="res://assets/images/Queen/Jump1.png" id="9_cwxh1"]
+[ext_resource type="Texture2D" uid="uid://oudqsf0f5qlp" path="res://assets/images/Queen/Roll1.png" id="10_45m88"]
+[ext_resource type="Texture2D" uid="uid://dcoymh84li4g7" path="res://assets/images/Queen/Roll2.png" id="11_d4ave"]
+[ext_resource type="Texture2D" uid="uid://ljjgijmpxd86" path="res://assets/images/Queen/Run1.png" id="12_8bp8k"]
+[ext_resource type="Texture2D" uid="uid://himqjidn3nkj" path="res://assets/images/Queen/Run2.png" id="13_v8w1b"]
+[ext_resource type="Texture2D" uid="uid://bnoie3c8vytcm" path="res://assets/images/Queen/Wall.png" id="14_3egus"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wu2jy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3coyb"]
 radius = 66.0681
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_4p1t2"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_r07f8"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_bsww1")
+"texture": ExtResource("5_m4uwu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_fgra0")
+"texture": ExtResource("6_41fis")
 }],
 "loop": true,
 "name": &"Air",
@@ -35,10 +36,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_t1qqu")
+"texture": ExtResource("5_fqvax")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_dr8du")
+"texture": ExtResource("6_4e5a3")
 }],
 "loop": true,
 "name": &"Idle",
@@ -46,41 +47,41 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("9_6wwsa")
+"texture": ExtResource("9_cwxh1")
 }],
-"loop": true,
+"loop": false,
 "name": &"Jump",
 "speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("10_fwce3")
+"texture": ExtResource("10_45m88")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_3p2rg")
+"texture": ExtResource("11_d4ave")
 }],
-"loop": true,
+"loop": false,
 "name": &"Roll",
 "speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("12_sfxtd")
+"texture": ExtResource("12_8bp8k")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_3rxsj")
+"texture": ExtResource("13_v8w1b")
 }],
 "loop": true,
 "name": &"Run",
-"speed": 8.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("14_6ytq1")
+"texture": ExtResource("14_3egus")
 }],
 "loop": true,
 "name": &"Wall",
-"speed": 3.0
+"speed": 5.0
 }]
 
 [node name="Player" type="CharacterBody2D"]
@@ -105,6 +106,9 @@ script = ExtResource("3_4uyti")
 
 [node name="Shooting" type="Node" parent="PrivateScripts"]
 script = ExtResource("4_y48kl")
+
+[node name="AnimationManager" type="Node" parent="PrivateScripts"]
+script = ExtResource("5_hwcfy")
 
 [node name="Timers" type="Node" parent="."]
 
@@ -146,13 +150,12 @@ texture = ExtResource("1_q0tl4")
 unique_name_in_owner = true
 shape = SubResource("CircleShape2D_3coyb")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="QueenSprites" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, -37)
-scale = Vector2(4.16, 4.16)
-sprite_frames = SubResource("SpriteFrames_4p1t2")
-animation = &"Wall"
-frame_progress = 0.241096
+position = Vector2(0, -9)
+sprite_frames = SubResource("SpriteFrames_r07f8")
+animation = &"Air"
+autoplay = "Idle"
 
 [connection signal="timeout" from="Timers/JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
 [connection signal="body_entered" from="ChaseHitbox" to="." method="_on_chase_hitbox_body_entered"]

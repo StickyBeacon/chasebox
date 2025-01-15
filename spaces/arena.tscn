@@ -85,6 +85,7 @@ shape = SubResource("WorldBoundaryShape2D_di7i8")
 [node name="Camera2D" type="Camera2D" parent="."]
 unique_name_in_owner = true
 scale = Vector2(1, 0.428172)
+zoom = Vector2(0.5, 0.5)
 
 [node name="GameUI" type="CanvasLayer" parent="."]
 
