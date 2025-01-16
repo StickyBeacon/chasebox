@@ -8,19 +8,27 @@ class_name Player
 		controller_id = value
 @export var player_id = 0:
 	set(value):
-		match(value):
+		match(value): 
 			1:
-				%PlayerSprite.modulate = Color(1,0,0)
+				%AnimationManager.current_sprites = %WaveSprites
+				%WaveSprites.modulate = Color(1,0,0)
 				%JumpIndicator.modulate = Color(1,0,0)
+				%AimCursor.modulate = Color(1,0,0)
 			2:
-				%PlayerSprite.modulate = Color(0,1,0)
+				%AnimationManager.current_sprites = %BratSprites
+				%BratSprites.modulate = Color(0,1,0)
 				%JumpIndicator.modulate = Color(0,1,0)
+				%AimCursor.modulate = Color(0,1,0)
 			3:
-				%PlayerSprite.modulate = Color(0,0,1)
+				%AnimationManager.current_sprites = %QueenSprites
+				%QueenSprites.modulate = Color(0,0,1)
 				%JumpIndicator.modulate = Color(0,0,1)
+				%AimCursor.modulate = Color(0,0,1)
 			4:
-				%PlayerSprite.modulate = Color(1,1,0)
+				%AnimationManager.current_sprites = %JuliettSprites
+				%JuliettSprites.modulate = Color(1,1,0)
 				%JumpIndicator.modulate = Color(1,1,0)
+				%AimCursor.modulate = Color(1,1,0)
 			_:
 				printerr("%s: value %s is not valid playerid"% [name, value])
 		player_id = value

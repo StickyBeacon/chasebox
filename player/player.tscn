@@ -51,7 +51,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Jump",
-"speed": 10.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -90,6 +90,7 @@ script = ExtResource("1_bt2nw")
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 unique_name_in_owner = true
+visible = false
 scale = Vector2(0.234, 0.234)
 texture = ExtResource("1_q0tl4")
 
@@ -108,6 +109,7 @@ script = ExtResource("3_4uyti")
 script = ExtResource("4_y48kl")
 
 [node name="AnimationManager" type="Node" parent="PrivateScripts"]
+unique_name_in_owner = true
 script = ExtResource("5_hwcfy")
 
 [node name="Timers" type="Node" parent="."]
@@ -121,7 +123,8 @@ one_shot = true
 unique_name_in_owner = true
 
 [node name="Sprite2D2" type="Sprite2D" parent="AimCursor"]
-position = Vector2(30, 0)
+z_index = 20
+position = Vector2(57, 0)
 scale = Vector2(0.118, 0.118)
 texture = ExtResource("1_q0tl4")
 
@@ -151,11 +154,52 @@ unique_name_in_owner = true
 shape = SubResource("CircleShape2D_3coyb")
 
 [node name="QueenSprites" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 5
 texture_filter = 1
-position = Vector2(0, -9)
+position = Vector2(0, -17)
+scale = Vector2(1.28, 1.28)
 sprite_frames = SubResource("SpriteFrames_r07f8")
-animation = &"Air"
+animation = &"Jump"
+autoplay = "Idle"
+
+[node name="WaveSprites" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 5
+texture_filter = 1
+position = Vector2(0, -17)
+scale = Vector2(1.28, 1.28)
+sprite_frames = SubResource("SpriteFrames_r07f8")
+animation = &"Jump"
+autoplay = "Idle"
+
+[node name="BratSprites" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 5
+texture_filter = 1
+position = Vector2(0, -17)
+scale = Vector2(1.28, 1.28)
+sprite_frames = SubResource("SpriteFrames_r07f8")
+animation = &"Jump"
+autoplay = "Idle"
+
+[node name="JuliettSprites" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 5
+texture_filter = 1
+position = Vector2(0, -17)
+scale = Vector2(1.28, 1.28)
+sprite_frames = SubResource("SpriteFrames_r07f8")
+animation = &"Jump"
 autoplay = "Idle"
 
 [connection signal="timeout" from="Timers/JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
 [connection signal="body_entered" from="ChaseHitbox" to="." method="_on_chase_hitbox_body_entered"]
+[connection signal="animation_finished" from="QueenSprites" to="PrivateScripts/AnimationManager" method="on_sprite_end"]
+[connection signal="animation_finished" from="WaveSprites" to="PrivateScripts/AnimationManager" method="on_sprite_end"]
+[connection signal="animation_finished" from="BratSprites" to="PrivateScripts/AnimationManager" method="on_sprite_end"]
+[connection signal="animation_finished" from="JuliettSprites" to="PrivateScripts/AnimationManager" method="on_sprite_end"]

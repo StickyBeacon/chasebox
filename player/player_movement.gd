@@ -92,6 +92,7 @@ func _on_jump_buffer_timer_timeout() -> void:
 
 func _activate_jump():
 	player.velocity.y = JUMP_VELOCITY
+	%AnimationManager.change_to_state("Jump")
 	_is_jump_buffered = false
 	%JumpBufferTimer.stop()
 	_free_jump = false
