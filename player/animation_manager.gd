@@ -10,6 +10,7 @@ var current_sprites :AnimatedSprite2D = null:
 var previous_state = "Idle"
 var interruptable_dict = {"Idle":true,"Air":true,"Roll":false,"Run":true,"Wall":true,"Jump":false}
 const STRETCH_DIVIDER = 2000
+const ROTATE_DIVIDER = 2000
 var starting_scale = null
 
 
@@ -25,6 +26,8 @@ func on_sprite_end():
 func _process(_delta: float) -> void:
 	if sign(player.velocity.x) != 0:
 		current_sprites.scale.x = float(sign(player.velocity.x)) 
+	
+	current_sprites.rotation = player.velocity.x / ROTATE_DIVIDER
 	
 	current_sprites.scale.y = starting_scale + abs(player.velocity.y) / STRETCH_DIVIDER 
 	current_sprites.scale.x = sign(current_sprites.scale.x)*(starting_scale - abs(player.velocity.y) / STRETCH_DIVIDER) 
