@@ -10,25 +10,25 @@ class_name Player
 	set(value):
 		match(value): 
 			1:
+				%JumpSound.pitch_scale = .9
 				%AnimationManager.current_sprites = %WaveSprites
 				%WaveSprites.modulate = Color(1,0,0)
-				%JumpIndicator.modulate = Color(1,0,0)
-				%AimCursor.modulate = Color(1,0,0)
+				recolor_sprites(Color(1,0,0))
 			2:
+				%JumpSound.pitch_scale = 1.5
 				%AnimationManager.current_sprites = %BratSprites
 				%BratSprites.modulate = Color(0,1,0)
-				%JumpIndicator.modulate = Color(0,1,0)
-				%AimCursor.modulate = Color(0,1,0)
+				recolor_sprites(Color(0,1,0))
 			3:
+				%JumpSound.pitch_scale = 1.3
 				%AnimationManager.current_sprites = %QueenSprites
 				%QueenSprites.modulate = Color(0,0,1)
-				%JumpIndicator.modulate = Color(0,0,1)
-				%AimCursor.modulate = Color(0,0,1)
+				recolor_sprites(Color(0,0,1))
 			4:
+				%JumpSound.pitch_scale = 0.75
 				%AnimationManager.current_sprites = %JuliettSprites
 				%JuliettSprites.modulate = Color(1,1,0)
-				%JumpIndicator.modulate = Color(1,1,0)
-				%AimCursor.modulate = Color(1,1,0)
+				recolor_sprites(Color(1,1,0))
 			_:
 				printerr("%s: value %s is not valid playerid"% [name, value])
 		player_id = value
@@ -37,7 +37,7 @@ class_name Player
 		team = value
 		var _is_chaser = true if value == Utils.Team.Chaser else false
 		%ChaseHitbox.set_deferred("monitoring",_is_chaser)
-		%ChaseSprite.set_deferred("visible",_is_chaser) 
+		%ChaseHitbox.set_deferred("visible",_is_chaser) 
 
 @export var enabled :bool = false:
 	set(value):
@@ -91,5 +91,15 @@ func _kill_player():
 	# miss ze teleporteren naar een "hell" ofzo in plaats van ze te doden?
 	# spawn wa particle effects die ze nalaten
 	print("%s: dies" % name)
+	%SawSound.play()
 	player_died.emit(player_id)
 	enabled = false
+
+
+func recolor_sprites(color):
+	%JumpIndicator.modulate = color
+	%AimCursor.modulate = color
+	%ChaseSprite.modulate = color
+	%ChaseSprite.modulate.a = .3
+	%ChaseSprite2.modulate = color
+	%ChaseSprite2.modulate.a = .03

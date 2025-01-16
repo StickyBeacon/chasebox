@@ -37,6 +37,7 @@ func _process(_delta: float) -> void:
 	
 	if player.is_on_floor():
 		if previous_state == "Air":
+			%LandSound.play()
 			change_to_state("Roll")
 			return
 		
@@ -58,3 +59,6 @@ func change_to_state(state):
 	if previous_state == state: return
 	current_sprites.play(state)
 	previous_state = state
+	
+	if previous_state == "Wall":
+		%WallHitSound.play()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://ce8oxjeft3feq"]
+[gd_scene load_steps=64 format=3 uid="uid://ce8oxjeft3feq"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_bt2nw"]
 [ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="1_q0tl4"]
@@ -9,7 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://8t7m5pij44ai" path="res://assets/images/Queen/Air1.png" id="5_m4uwu"]
 [ext_resource type="Texture2D" uid="uid://cd6vopmwi1kyh" path="res://assets/images/Queen/Idle2.png" id="6_4e5a3"]
 [ext_resource type="Texture2D" uid="uid://bi2aq251gc8hy" path="res://assets/images/Queen/Air2.png" id="6_41fis"]
+[ext_resource type="Texture2D" uid="uid://lkw46275p7g8" path="res://assets/images/arrow.png" id="6_rluxf"]
+[ext_resource type="Texture2D" uid="uid://c1d467ncfvcvq" path="res://assets/images/jumpPlatform.png" id="7_h4bhr"]
+[ext_resource type="Texture2D" uid="uid://bnlg07teg28eq" path="res://assets/images/wheel.png" id="8_ff2o0"]
 [ext_resource type="Texture2D" uid="uid://fdxc10t3fxvv" path="res://assets/images/Queen/Jump1.png" id="9_cwxh1"]
+[ext_resource type="Script" path="res://player/rotate_sprite.gd" id="9_keoky"]
 [ext_resource type="Texture2D" uid="uid://oudqsf0f5qlp" path="res://assets/images/Queen/Roll1.png" id="10_45m88"]
 [ext_resource type="Texture2D" uid="uid://dcoymh84li4g7" path="res://assets/images/Queen/Roll2.png" id="11_d4ave"]
 [ext_resource type="Texture2D" uid="uid://ljjgijmpxd86" path="res://assets/images/Queen/Run1.png" id="12_8bp8k"]
@@ -45,6 +49,10 @@
 [ext_resource type="Texture2D" uid="uid://bbu7bhc7siavi" path="res://assets/images/Juliett/Run1.png" id="43_4xrrg"]
 [ext_resource type="Texture2D" uid="uid://dcvxbx0n5v8mu" path="res://assets/images/Juliett/Run2.png" id="44_erfif"]
 [ext_resource type="Texture2D" uid="uid://bwprf3dvskrg" path="res://assets/images/Juliett/Wall.png" id="45_7wtsb"]
+[ext_resource type="AudioStream" uid="uid://bujopadw5biqm" path="res://assets/audio/spit.wav" id="50_mxens"]
+[ext_resource type="AudioStream" uid="uid://8k5tqgy1tpq6" path="res://assets/audio/spat.wav" id="51_saje4"]
+[ext_resource type="AudioStream" uid="uid://c5niu1r1ecsq" path="res://assets/audio/sawcut.wav" id="52_g4ct5"]
+[ext_resource type="AudioStream" uid="uid://36w1x2a153d" path="res://assets/audio/jump.wav" id="53_ge2md"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wu2jy"]
 
@@ -144,7 +152,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Jump",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -229,7 +237,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Run",
-"speed": 8.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -281,7 +289,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Roll",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -302,6 +310,26 @@ animations = [{
 "name": &"Wall",
 "speed": 5.0
 }]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ihkps"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("50_mxens")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qxflt"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("51_saje4")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6fgub"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("52_g4ct5")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_oodqy"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("53_ge2md")
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -343,17 +371,18 @@ unique_name_in_owner = true
 
 [node name="Sprite2D2" type="Sprite2D" parent="AimCursor"]
 z_index = 20
+texture_filter = 1
 position = Vector2(57, 0)
-scale = Vector2(0.118, 0.118)
-texture = ExtResource("1_q0tl4")
+rotation = -1.5708
+scale = Vector2(0.596476, 0.596476)
+texture = ExtResource("6_rluxf")
 
 [node name="JumpIndicator" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-modulate = Color(0.708337, 0, 0.416291, 1)
-z_index = 10
-position = Vector2(2.27374e-13, 21)
-scale = Vector2(0.305745, 0.0530571)
-texture = ExtResource("1_q0tl4")
+z_index = 11
+texture_filter = 1
+position = Vector2(2.27374e-13, 29)
+texture = ExtResource("7_h4bhr")
 
 [node name="ChaseHitbox" type="Area2D" parent="."]
 unique_name_in_owner = true
@@ -361,12 +390,24 @@ collision_layer = 0
 collision_mask = 2
 monitoring = false
 
+[node name="ChaseSprite2" type="Sprite2D" parent="ChaseHitbox"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.454902)
+z_index = 10
+texture_filter = 1
+scale = Vector2(2.22, 2.33532)
+texture = ExtResource("8_ff2o0")
+script = ExtResource("9_keoky")
+ROTATION_SPEED = 2
+
 [node name="ChaseSprite" type="Sprite2D" parent="ChaseHitbox"]
 unique_name_in_owner = true
-modulate = Color(0.972873, 2.11775e-06, 0.54633, 0.211765)
+modulate = Color(1, 1, 1, 0.454902)
 z_index = 10
-scale = Vector2(1.02245, 1.04867)
-texture = ExtResource("1_q0tl4")
+texture_filter = 1
+scale = Vector2(1.27737, 1.31012)
+texture = ExtResource("8_ff2o0")
+script = ExtResource("9_keoky")
 
 [node name="ChaseCollision" type="CollisionShape2D" parent="ChaseHitbox"]
 unique_name_in_owner = true
@@ -391,7 +432,7 @@ texture_filter = 1
 position = Vector2(0, -17)
 scale = Vector2(1.28, 1.28)
 sprite_frames = SubResource("SpriteFrames_hm83b")
-animation = &"Wall"
+animation = &"Jump"
 autoplay = "Idle"
 
 [node name="BratSprites" type="AnimatedSprite2D" parent="."]
@@ -402,8 +443,10 @@ texture_filter = 1
 position = Vector2(0, -17)
 scale = Vector2(1.28, 1.28)
 sprite_frames = SubResource("SpriteFrames_myn68")
-animation = &"Idle"
+animation = &"Run"
 autoplay = "Idle"
+frame = 1
+frame_progress = 0.650843
 
 [node name="JuliettSprites" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
@@ -415,6 +458,36 @@ scale = Vector2(1.28, 1.28)
 sprite_frames = SubResource("SpriteFrames_wwt6k")
 animation = &"Roll"
 autoplay = "Idle"
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="WallHitSound" type="AudioStreamPlayer2D" parent="Audio"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_ihkps")
+volume_db = -10.0
+max_distance = 500.0
+bus = &"SoundEffects"
+
+[node name="LandSound" type="AudioStreamPlayer2D" parent="Audio"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_qxflt")
+volume_db = -10.0
+max_distance = 500.0
+bus = &"SoundEffects"
+
+[node name="SawSound" type="AudioStreamPlayer2D" parent="Audio"]
+unique_name_in_owner = true
+process_mode = 3
+stream = SubResource("AudioStreamRandomizer_6fgub")
+volume_db = -14.0
+max_distance = 500.0
+bus = &"SoundEffects"
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="Audio"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_oodqy")
+volume_db = -10.0
+max_distance = 100.0
 
 [connection signal="timeout" from="Timers/JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
 [connection signal="body_entered" from="ChaseHitbox" to="." method="_on_chase_hitbox_body_entered"]
