@@ -2,7 +2,7 @@ extends Node
 
 @onready var player :Player = $"../.."
 
-var chaser_extra_speed = 20.0
+var chaser_extra_speed = 70.0
 const SPEED = 500.0
 const AIR_ACCEL = 10.0
 const GROUND_GRIP = 3000.0

@@ -1,7 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://gu2dwpe4sb72"]
+[gd_scene load_steps=16 format=3 uid="uid://gu2dwpe4sb72"]
 
 [ext_resource type="Script" path="res://managers/non_globals/timer_manager.gd" id="1_7i13x"]
+[ext_resource type="Shader" path="res://shaders/repeat_shader.gdshader" id="1_47ug3"]
+[ext_resource type="Shader" path="res://spaces/border_shader.gdshader" id="1_61bap"]
 [ext_resource type="Script" path="res://managers/non_globals/round_manager.gd" id="1_pny5p"]
+[ext_resource type="Texture2D" uid="uid://c75qwlvt2pt8v" path="res://assets/images/bgtextures/bordertest.png" id="1_v0cek"]
+[ext_resource type="Texture2D" uid="uid://bd1ibmfpyq05h" path="res://assets/images/bgtextures/bgwall.png" id="2_6t5a5"]
 [ext_resource type="Script" path="res://managers/non_globals/ingame_ui_manager.gd" id="3_ajy73"]
 [ext_resource type="Script" path="res://managers/non_globals/map_manager.gd" id="5_571it"]
 [ext_resource type="Script" path="res://managers/non_globals/trauma_manager.gd" id="5_kvvfj"]
@@ -9,9 +13,32 @@
 [ext_resource type="Script" path="res://managers/non_globals/pause_manager.gd" id="6_lksqt"]
 [ext_resource type="PackedScene" uid="uid://bum10leeftxjx" path="res://ui/end_screen_list.tscn" id="7_1q6bt"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a6rtk"]
+resource_local_to_scene = true
+shader = ExtResource("1_47ug3")
+shader_parameter/tiling_density = Vector2(11, 6)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4vepx"]
+shader = ExtResource("1_61bap")
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_di7i8"]
 
 [node name="Arena" type="Node2D"]
+
+[node name="ArenaBG" type="Sprite2D" parent="."]
+z_index = -80
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_a6rtk")
+scale = Vector2(11, 6)
+texture = ExtResource("2_6t5a5")
+
+[node name="Bordertest" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_4vepx")
+scale = Vector2(1104.3, 601.108)
+texture = ExtResource("1_v0cek")
+metadata/_edit_lock_ = true
 
 [node name="Managers" type="Node" parent="."]
 

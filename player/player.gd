@@ -57,9 +57,9 @@ var handicap:Utils.Handicap = Utils.Handicap.None:
 			Utils.Handicap.BiggerSaw:
 				%ChaseHitbox.scale *= 1.5
 			Utils.Handicap.Slowdown:
-				%Movement.chaser_extra_speed = -100
+				%Movement.chaser_extra_speed = -80
 			Utils.Handicap.Speedup:
-				%Movement.chaser_extra_speed = 200
+				%Movement.chaser_extra_speed = 220
 
 
 signal player_died(id)
@@ -102,4 +102,4 @@ func recolor_sprites(color):
 	%ChaseSprite.modulate = color
 	%ChaseSprite.modulate.a = .3
 	%ChaseSprite2.modulate = color
-	%ChaseSprite2.modulate.a = .03
+	%ChaseSprite2.modulate.a = .05

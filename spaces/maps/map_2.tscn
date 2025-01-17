@@ -1,10 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1llg74nw62kx"]
+[gd_scene load_steps=3 format=3 uid="uid://c1llg74nw62kx"]
 
 [ext_resource type="PackedScene" uid="uid://bry1y8hn5s5hf" path="res://spaces/maps/base_map.tscn" id="1_dh1ru"]
-[ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="2_mcqww"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u6vgl"]
-size = Vector2(128, 128)
+[ext_resource type="PackedScene" uid="uid://dbog3t23i0am4" path="res://spawnables/obstacle.tscn" id="2_fi7ng"]
 
 [node name="BaseMap" instance=ExtResource("1_dh1ru")]
 
@@ -16,46 +13,18 @@ position = Vector2(-3, -248)
 
 [node name="Map" type="Node2D" parent="." index="3"]
 
-[node name="Box" type="StaticBody2D" parent="Map" index="0"]
-position = Vector2(-122, 260)
+[node name="Obstacle" parent="." index="4" instance=ExtResource("2_fi7ng")]
+position = Vector2(-119, 63)
+scale = Vector2(2.71982, 2.06251)
 
-[node name="Sprite2D" type="Sprite2D" parent="Map/Box" index="0"]
-modulate = Color(0.350029, 0.309714, 0.280276, 1)
-texture = ExtResource("2_mcqww")
+[node name="Obstacle2" parent="." index="5" instance=ExtResource("2_fi7ng")]
+position = Vector2(333, -113)
+scale = Vector2(2.75366, 1.48983)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box" index="1"]
-modulate = Color(0.972105, 0.974033, 0.973949, 1)
-shape = SubResource("RectangleShape2D_u6vgl")
+[node name="Obstacle3" parent="." index="6" instance=ExtResource("2_fi7ng")]
+position = Vector2(219, 221)
+scale = Vector2(3.4129, -1.9069)
 
-[node name="Box2" type="StaticBody2D" parent="Map" index="1"]
-position = Vector2(133, 259)
-
-[node name="Sprite2D" type="Sprite2D" parent="Map/Box2" index="0"]
-modulate = Color(0.350029, 0.309714, 0.280276, 1)
-texture = ExtResource("2_mcqww")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box2" index="1"]
-modulate = Color(0.972105, 0.974033, 0.973949, 1)
-shape = SubResource("RectangleShape2D_u6vgl")
-
-[node name="Box4" type="StaticBody2D" parent="Map" index="2"]
-position = Vector2(6, -147)
-
-[node name="Sprite2D" type="Sprite2D" parent="Map/Box4" index="0"]
-modulate = Color(0.350029, 0.309714, 0.280276, 1)
-texture = ExtResource("2_mcqww")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box4" index="1"]
-modulate = Color(0.972105, 0.974033, 0.973949, 1)
-shape = SubResource("RectangleShape2D_u6vgl")
-
-[node name="Box5" type="StaticBody2D" parent="Map" index="3"]
-position = Vector2(11, 62)
-
-[node name="Sprite2D" type="Sprite2D" parent="Map/Box5" index="0"]
-modulate = Color(0.350029, 0.309714, 0.280276, 1)
-texture = ExtResource("2_mcqww")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Box5" index="1"]
-modulate = Color(0.972105, 0.974033, 0.973949, 1)
-shape = SubResource("RectangleShape2D_u6vgl")
+[node name="Obstacle4" parent="." index="7" instance=ExtResource("2_fi7ng")]
+position = Vector2(-436, 43)
+scale = Vector2(1.48609, 2.05456)

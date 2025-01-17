@@ -13,12 +13,10 @@ func _ready() -> void:
 		_input_dict[key] = key + str(player.controller_id)
 
 
-func _input(event: InputEvent) -> void:
-	return #TODO verander dit als je items wilt!!!!!!!!!!!!!!!!!!
-	
-	if !player.enabled: return
-	if event.is_action_pressed(_input_dict["shoot"]):
-		shoot()
+#func _input(event: InputEvent) -> void: #TODO verander dit als je items wilt!!!!!!!!!!!!!!!!!!
+	#
+	#if event.is_action_pressed(_input_dict["shoot"]):
+		#shoot()
 
 
 func _process(delta: float) -> void:
