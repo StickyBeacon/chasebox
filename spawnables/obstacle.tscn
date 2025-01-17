@@ -11,6 +11,9 @@ size = Vector2(94, 94)
 resource_local_to_scene = true
 shader = ExtResource("1_e3lhm")
 shader_parameter/tiling_density = Vector2(1, 1)
+shader_parameter/scrolling_dir = Vector2(0.5, 0)
+shader_parameter/oscilation_speed = Vector2(0, 0.3)
+shader_parameter/oscilation_amp = Vector2(1, 0.2)
 
 [node name="Obstacle" type="StaticBody2D"]
 z_index = -1

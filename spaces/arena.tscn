@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://gu2dwpe4sb72"]
+[gd_scene load_steps=17 format=3 uid="uid://gu2dwpe4sb72"]
 
 [ext_resource type="Script" path="res://managers/non_globals/timer_manager.gd" id="1_7i13x"]
 [ext_resource type="Shader" path="res://shaders/repeat_shader.gdshader" id="1_47ug3"]
@@ -12,11 +12,15 @@
 [ext_resource type="PackedScene" uid="uid://dosdfkupctoop" path="res://ui/turn_indicator.tscn" id="6_duwty"]
 [ext_resource type="Script" path="res://managers/non_globals/pause_manager.gd" id="6_lksqt"]
 [ext_resource type="PackedScene" uid="uid://bum10leeftxjx" path="res://ui/end_screen_list.tscn" id="7_1q6bt"]
+[ext_resource type="PackedScene" uid="uid://dbog3t23i0am4" path="res://spawnables/obstacle.tscn" id="13_qreh3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a6rtk"]
 resource_local_to_scene = true
 shader = ExtResource("1_47ug3")
 shader_parameter/tiling_density = Vector2(11, 6)
+shader_parameter/scrolling_dir = Vector2(0, 0)
+shader_parameter/oscilation_speed = Vector2(0.2, 0.2)
+shader_parameter/oscilation_amp = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4vepx"]
 shader = ExtResource("1_61bap")
@@ -34,6 +38,7 @@ scale = Vector2(11, 6)
 texture = ExtResource("2_6t5a5")
 
 [node name="Bordertest" type="Sprite2D" parent="."]
+visible = false
 texture_filter = 1
 material = SubResource("ShaderMaterial_4vepx")
 scale = Vector2(1104.3, 601.108)
@@ -285,6 +290,22 @@ text = "RESUME"
 layout_mode = 2
 theme_override_font_sizes/font_size = 71
 text = "QUIT"
+
+[node name="Obstacle" parent="." instance=ExtResource("13_qreh3")]
+position = Vector2(-910, -17)
+scale = Vector2(7.56305, 11.2551)
+
+[node name="Obstacle2" parent="." instance=ExtResource("13_qreh3")]
+position = Vector2(910, -17)
+scale = Vector2(7.56305, 11.2551)
+
+[node name="Obstacle3" parent="." instance=ExtResource("13_qreh3")]
+position = Vector2(-70, -755)
+scale = Vector2(19.2926, 9.62764)
+
+[node name="Obstacle4" parent="." instance=ExtResource("13_qreh3")]
+position = Vector2(-70, 755)
+scale = Vector2(19.2926, 9.62764)
 
 [connection signal="timeout" from="Managers/TimerManager/ActualTimer" to="Managers/RoundManager" method="_on_round_timer_timeout"]
 [connection signal="button_up" from="GameUI/PauseScreen/Paus/Continue" to="Managers/PauseManager" method="_on_continue_button_up"]
