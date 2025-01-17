@@ -1,15 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://c1llg74nw62kx"]
 
-[ext_resource type="PackedScene" uid="uid://bry1y8hn5s5hf" path="res://spaces/maps/base_map.tscn" id="1_dh1ru"]
+[ext_resource type="PackedScene" uid="uid://bry1y8hn5s5hf" path="res://spaces/base_map.tscn" id="1_dh1ru"]
 [ext_resource type="PackedScene" uid="uid://dbog3t23i0am4" path="res://spawnables/obstacle.tscn" id="2_fi7ng"]
 
 [node name="BaseMap" instance=ExtResource("1_dh1ru")]
 
 [node name="ChaserSpawn" parent="." index="0"]
-position = Vector2(2, 227)
+position = Vector2(-402, 239)
 
 [node name="RunnerSpawn" parent="." index="1"]
-position = Vector2(-3, -248)
+position = Vector2(343, -222)
 
 [node name="Map" type="Node2D" parent="." index="3"]
 

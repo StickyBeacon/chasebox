@@ -1,21 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://dcg5orwvrc41d"]
+[gd_scene load_steps=5 format=3 uid="uid://dcg5orwvrc41d"]
 
-[ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="1_fd14c"]
 [ext_resource type="Script" path="res://spawnables/saw_blade.gd" id="1_kljh2"]
+[ext_resource type="Texture2D" uid="uid://bnlg07teg28eq" path="res://assets/images/wheel.png" id="2_77hob"]
+[ext_resource type="Script" path="res://player/rotate_sprite.gd" id="3_cbuqc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6jeks"]
 radius = 17.2627
 
 [node name="SawBlade" type="Area2D"]
-modulate = Color(0.878431, 0, 0, 1)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_kljh2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+process_mode = 3
 z_index = -5
-scale = Vector2(0.28125, 0.28125)
-texture = ExtResource("1_fd14c")
+texture_filter = 1
+scale = Vector2(0.345909, 0.345909)
+texture = ExtResource("2_77hob")
+script = ExtResource("3_cbuqc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_6jeks")

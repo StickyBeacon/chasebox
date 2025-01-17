@@ -13,6 +13,7 @@ shader = ExtResource("1_e3lhm")
 shader_parameter/tiling_density = Vector2(1, 1)
 
 [node name="Obstacle" type="StaticBody2D"]
+z_index = -1
 script = ExtResource("1_e3umr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
