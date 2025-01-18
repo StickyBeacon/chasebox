@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://gu2dwpe4sb72"]
+[gd_scene load_steps=20 format=3 uid="uid://gu2dwpe4sb72"]
 
 [ext_resource type="Script" path="res://managers/non_globals/timer_manager.gd" id="1_7i13x"]
 [ext_resource type="Shader" path="res://shaders/repeat_shader.gdshader" id="1_47ug3"]
@@ -9,9 +9,11 @@
 [ext_resource type="Script" path="res://managers/non_globals/ingame_ui_manager.gd" id="3_ajy73"]
 [ext_resource type="Script" path="res://managers/non_globals/map_manager.gd" id="5_571it"]
 [ext_resource type="Script" path="res://managers/non_globals/trauma_manager.gd" id="5_kvvfj"]
+[ext_resource type="AudioStream" uid="uid://be6xla56tmxbp" path="res://assets/audio/ticktock10sec.wav" id="6_1nm1q"]
 [ext_resource type="PackedScene" uid="uid://dosdfkupctoop" path="res://ui/turn_indicator.tscn" id="6_duwty"]
 [ext_resource type="Script" path="res://managers/non_globals/pause_manager.gd" id="6_lksqt"]
 [ext_resource type="PackedScene" uid="uid://bum10leeftxjx" path="res://ui/end_screen_list.tscn" id="7_1q6bt"]
+[ext_resource type="AudioStream" uid="uid://ddfqnpw6xfyb4" path="res://assets/audio/partyhorn.wav" id="8_rvxqc"]
 [ext_resource type="PackedScene" uid="uid://dbog3t23i0am4" path="res://spawnables/obstacle.tscn" id="13_qreh3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a6rtk"]
@@ -24,6 +26,11 @@ shader_parameter/oscilation_amp = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4vepx"]
 shader = ExtResource("1_61bap")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_raugb"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("8_rvxqc")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_di7i8"]
 
@@ -56,10 +63,22 @@ unique_name_in_owner = true
 wait_time = 10.0
 one_shot = true
 
+[node name="TickTockSound" type="AudioStreamPlayer" parent="Managers/TimerManager"]
+unique_name_in_owner = true
+process_mode = 3
+stream = ExtResource("6_1nm1q")
+volume_db = -10.0
+
 [node name="RoundManager" type="Node" parent="Managers"]
 unique_name_in_owner = true
 process_mode = 3
 script = ExtResource("1_pny5p")
+
+[node name="WinSound" type="AudioStreamPlayer" parent="Managers/RoundManager"]
+unique_name_in_owner = true
+process_mode = 3
+stream = SubResource("AudioStreamRandomizer_raugb")
+volume_db = -15.0
 
 [node name="IngameUIManager" type="Node" parent="Managers"]
 unique_name_in_owner = true
@@ -78,6 +97,9 @@ script = ExtResource("5_kvvfj")
 unique_name_in_owner = true
 process_mode = 3
 script = ExtResource("6_lksqt")
+
+[node name="SplatContainer" type="Node2D" parent="." groups=["SplatContainer"]]
+unique_name_in_owner = true
 
 [node name="PlayerNode" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -123,6 +145,7 @@ zoom = Vector2(0.5, 0.5)
 
 [node name="TimeLabel" type="Label" parent="GameUI"]
 unique_name_in_owner = true
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

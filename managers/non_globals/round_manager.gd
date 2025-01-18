@@ -16,9 +16,9 @@ var is_in_game = false
 func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
 	if event.is_action_pressed("ui_focus_next"):
 		if PlayerManager.is_empty():
-			_chosen_players = [1,2]
-			for id in _chosen_players:
-				PlayerManager.add_player(id,id)
+			PlayerManager.add_player(1,3)
+			PlayerManager.add_player(2,2)
+			_chosen_players = PlayerManager.player_dict.keys()
 		else:
 			_chosen_players = PlayerManager.player_dict.keys()
 		start_game()
@@ -134,6 +134,7 @@ func on_player_died(player_id):
 	
 	# Een team is volledig dood
 	if _team_dict[player.team].size() == 0:
+		%TimerManager.reset_timer()
 		_end_turn()
 		
 	elif player.team == Utils.Team.Chaser: #Speler is chaser en andere chaser leeft nog
@@ -151,14 +152,18 @@ func _clear_round():
 func _on_round_timer_timeout() -> void:
 	for id in _team_dict[Utils.Team.Runner]:
 		%TimerManager.add_player_time(id, true)
+		%WinSound.play()
 		_end_turn()
 
 
 func _end_turn():
+	for id in _team_dict[Utils.Team.Runner]:
+		PlayerManager.get_player(id).win_round()
+	
 	is_in_game = false
 	#TODO Toon hier de freeze en wat er gebeurt?
 	get_tree().paused = true
-	await _wait(.2)
+	await _wait(.5)
 	get_tree().paused = false
 	PlayerManager.toggle_all_players(false)
 	%TimerManager.reset_timer()

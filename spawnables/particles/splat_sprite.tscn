@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://chbndiu58da1e"]
+
+[ext_resource type="Texture2D" uid="uid://cpl04t4bubtiq" path="res://assets/images/bgtextures/splat.png" id="1_txq5c"]
+[ext_resource type="Script" path="res://spawnables/particles/splat_sprite.gd" id="2_s4p64"]
+
+[node name="SplatSprite" type="Sprite2D"]
+z_index = -20
+texture_filter = 1
+texture = ExtResource("1_txq5c")
+script = ExtResource("2_s4p64")

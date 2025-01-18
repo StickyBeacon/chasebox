@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx1panyds7kii"]
+
+[ext_resource type="Texture2D" uid="uid://dgbeg05sihd2h" path="res://assets/images/bgtextures/smiley.png" id="1_t2ol6"]
+
+[node name="WinSprite" type="Sprite2D"]
+z_index = -20
+texture_filter = 1
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_t2ol6")

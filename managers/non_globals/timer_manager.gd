@@ -21,10 +21,12 @@ func _get_current_time():
 func reset_timer():
 	label.text = "0"
 	timer.stop()
+	%TickTockSound.stop()
 
 
 func start_timer():
 	timer.start()
+	%TickTockSound.play()
 
 
 func reset_values():

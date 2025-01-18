@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://culfuy258h84h"]
+
+[ext_resource type="Texture2D" uid="uid://b5amwgqa7xtu6" path="res://assets/images/bgtextures/dust.png" id="1_3rlq4"]
+[ext_resource type="Script" path="res://spawnables/particles/self_destruct.gd" id="2_uc3yc"]
+
+[sub_resource type="Curve" id="Curve_su3oe"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.586667, 0), 0.0, 0.0, 0, 0, Vector2(0.82, 0), 0.0, 0.0, 0, 0, Vector2(0.973333, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_ueqgl"]
+curve = SubResource("Curve_su3oe")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6nmoe"]
+particle_flag_disable_z = true
+angle_min = -441.3
+angle_max = 170.3
+spread = 180.0
+initial_velocity_min = 54.9
+initial_velocity_max = 118.28
+gravity = Vector3(0, 500, 0)
+scale_min = 0.3
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_ueqgl")
+
+[node name="Dust" type="GPUParticles2D"]
+process_mode = 3
+texture_filter = 1
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_6nmoe")
+texture = ExtResource("1_3rlq4")
+one_shot = true
+explosiveness = 1.0
+script = ExtResource("2_uc3yc")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true

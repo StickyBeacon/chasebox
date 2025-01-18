@@ -61,6 +61,10 @@ var handicap:Utils.Handicap = Utils.Handicap.None:
 			Utils.Handicap.Speedup:
 				%Movement.chaser_extra_speed = 220
 
+var splat_particle = preload("res://spawnables/particles/splatter.tscn")
+var splat_sprite = preload("res://spawnables/particles/splat_sprite.tscn")
+var win_particle = preload("res://spawnables/particles/win_particles.tscn")
+var win_sprite = preload("res://spawnables/particles/win_sprite.tscn")
 
 signal player_died(id)
 
@@ -87,13 +91,22 @@ func _on_chase_hitbox_body_entered(body: Node2D) -> void:
 		
 
 func _kill_player():
-	#TODO omdat er momenteel maar 2 spelers zijn sterft er nooit eigenlijk een speler. 
-	# miss ze teleporteren naar een "hell" ofzo in plaats van ze te doden?
-	# spawn wa particle effects die ze nalaten
 	print("%s: dies" % name)
 	%SawSound.play()
 	player_died.emit(player_id)
 	enabled = false
+	
+	# particle
+	var particle = splat_particle.instantiate()
+	particle.global_position = global_position
+	particle.modulate = %JumpIndicator.modulate #TODO bruhhh
+	get_tree().root.add_child(particle)
+	# splat
+	for i in randi_range(2,5):
+		var splat = splat_sprite.instantiate()
+		splat.initialize( %JumpIndicator.modulate, global_position)
+		get_tree().get_first_node_in_group("SplatContainer").add_child(splat)
+	
 
 
 func recolor_sprites(color):
@@ -103,3 +116,16 @@ func recolor_sprites(color):
 	%ChaseSprite.modulate.a = .3
 	%ChaseSprite2.modulate = color
 	%ChaseSprite2.modulate.a = .05
+
+
+func win_round():
+	var particle = win_particle.instantiate()
+	particle.global_position = global_position
+	particle.modulate = %JumpIndicator.modulate #TODO bruhhh
+	get_tree().root.add_child(particle)
+	
+	var win_splat = win_sprite.instantiate()
+	win_splat.global_position = global_position
+	win_splat.rotation = randf_range(-PI/6,PI/6)
+	win_splat.modulate = %JumpIndicator.modulate #TODO bruhhh
+	get_tree().get_first_node_in_group("SplatContainer").add_child(win_splat)

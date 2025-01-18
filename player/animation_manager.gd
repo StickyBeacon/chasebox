@@ -12,6 +12,7 @@ var interruptable_dict = {"Idle":true,"Air":true,"Roll":false,"Run":true,"Wall":
 const STRETCH_DIVIDER = 2000
 const ROTATE_DIVIDER = 2000
 var starting_scale = null
+var dust_particle = preload("res://spawnables/particles/dust.tscn")
 
 
 func on_sprite_end():
@@ -37,6 +38,7 @@ func _process(_delta: float) -> void:
 	
 	if player.is_on_floor():
 		if previous_state == "Air":
+			spawn_dust()
 			%LandSound.play()
 			change_to_state("Roll")
 			return
@@ -61,4 +63,12 @@ func change_to_state(state):
 	previous_state = state
 	
 	if previous_state == "Wall":
+		spawn_dust()
 		%WallHitSound.play()
+
+
+func spawn_dust():
+	var particle = dust_particle.instantiate()
+	particle.global_position = player.global_position + Vector2(0,0.5)
+	get_tree().root.add_child(particle)
+	

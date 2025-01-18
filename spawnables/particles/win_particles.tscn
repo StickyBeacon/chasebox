@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://bn1w2kl8th8ra"]
+
+[ext_resource type="Texture2D" uid="uid://cn0i1d1jrdn8e" path="res://assets/images/bgtextures/small_smiley.png" id="1_oy61o"]
+[ext_resource type="Script" path="res://spawnables/particles/self_destruct.gd" id="2_hd60g"]
+
+[sub_resource type="Curve" id="Curve_rge6m"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.62, 0.901099), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_g0g84"]
+curve = SubResource("Curve_rge6m")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3f6k4"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 106.0
+spread = 178.66
+initial_velocity_max = 220.44
+gravity = Vector3(0, 98, 0)
+scale_max = 4.0
+scale_curve = SubResource("CurveTexture_g0g84")
+
+[node name="WinParticles" type="GPUParticles2D"]
+process_mode = 3
+texture_filter = 1
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_3f6k4")
+texture = ExtResource("1_oy61o")
+one_shot = true
+explosiveness = 1.0
+script = ExtResource("2_hd60g")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
