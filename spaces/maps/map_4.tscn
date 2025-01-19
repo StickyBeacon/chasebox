@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwkiu7l0p7mtt"]
+
+[ext_resource type="PackedScene" uid="uid://bry1y8hn5s5hf" path="res://spaces/base_map.tscn" id="1_hq2mn"]
+[ext_resource type="PackedScene" uid="uid://dbog3t23i0am4" path="res://spawnables/obstacle.tscn" id="2_7eu2l"]
+[ext_resource type="PackedScene" uid="uid://dcg5orwvrc41d" path="res://spawnables/saw_blade.tscn" id="3_cx7xw"]
+
+[node name="BaseMap" instance=ExtResource("1_hq2mn")]
+
+[node name="Obstacle" parent="." index="3" instance=ExtResource("2_7eu2l")]
+position = Vector2(-285, 0)
+scale = Vector2(2.93289, 3.01418)
+
+[node name="Obstacle2" parent="." index="4" instance=ExtResource("2_7eu2l")]
+position = Vector2(226, 277)
+scale = Vector2(1.20377, 2.41917)
+
+[node name="Obstacle3" parent="." index="5" instance=ExtResource("2_7eu2l")]
+position = Vector2(780, -6)
+scale = Vector2(6.47156, -1.27325)
+
+[node name="Obstacle4" parent="." index="6" instance=ExtResource("2_7eu2l")]
+position = Vector2(113, -255)
+scale = Vector2(1.18785, -3.20557)
+
+[node name="SawBlade" parent="." index="7" instance=ExtResource("3_cx7xw")]
+position = Vector2(-537, 275)
+scale = Vector2(5.23791, 5.23791)
+
+[node name="SawBlade2" parent="." index="8" instance=ExtResource("3_cx7xw")]
+position = Vector2(409, 283)
+scale = Vector2(5.23791, 5.23791)
