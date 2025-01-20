@@ -14,7 +14,14 @@ func _input(event: InputEvent) -> void:
 func toggle_pause():
 	is_paused = !is_paused
 	%PauseScreen.visible = is_paused
+	if is_paused:
+		print("pausng!")
+		%TimerManager.pause_tick_tock()
+		
 	get_tree().paused = is_paused
+	if !is_paused:
+		%TimerManager.continue_tick_tock()
+	
 
 
 func _on_continue_button_up() -> void:

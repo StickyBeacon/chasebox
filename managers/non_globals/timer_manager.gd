@@ -29,6 +29,16 @@ func start_timer():
 	%TickTockSound.play()
 
 
+var pause_position = null
+func pause_tick_tock():
+	pause_position = %TickTockSound.get_playback_position()
+	%TickTockSound.stop()
+
+
+func continue_tick_tock():
+	%TickTockSound.play(pause_position)
+
+
 func reset_values():
 	game_score_dict = {}
 	round_time_dict = {}

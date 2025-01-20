@@ -6,6 +6,9 @@
 
 [node name="BaseMap" instance=ExtResource("1_hq2mn")]
 
+[node name="RunnerSpawn" parent="." index="1"]
+position = Vector2(504, -108)
+
 [node name="Obstacle" parent="." index="3" instance=ExtResource("2_7eu2l")]
 position = Vector2(-285, 0)
 scale = Vector2(2.93289, 3.01418)

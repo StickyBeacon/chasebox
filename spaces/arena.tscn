@@ -80,6 +80,11 @@ process_mode = 3
 stream = SubResource("AudioStreamRandomizer_raugb")
 volume_db = -15.0
 
+[node name="StartGameTimer" type="Timer" parent="Managers/RoundManager"]
+unique_name_in_owner = true
+wait_time = 2.0
+one_shot = true
+
 [node name="IngameUIManager" type="Node" parent="Managers"]
 unique_name_in_owner = true
 script = ExtResource("3_ajy73")
@@ -331,5 +336,6 @@ position = Vector2(-70, 755)
 scale = Vector2(19.2926, 9.62764)
 
 [connection signal="timeout" from="Managers/TimerManager/ActualTimer" to="Managers/RoundManager" method="_on_round_timer_timeout"]
+[connection signal="timeout" from="Managers/RoundManager/StartGameTimer" to="Managers/RoundManager" method="_on_start_game_timer_timeout"]
 [connection signal="button_up" from="GameUI/PauseScreen/Paus/Continue" to="Managers/PauseManager" method="_on_continue_button_up"]
 [connection signal="button_up" from="GameUI/PauseScreen/Paus/Quit" to="Managers/PauseManager" method="_on_quit_button_up"]

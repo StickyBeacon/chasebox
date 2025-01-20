@@ -6,6 +6,12 @@
 
 [node name="BaseMap" instance=ExtResource("1_6hvb0")]
 
+[node name="ChaserSpawn" parent="." index="0"]
+position = Vector2(0, 266)
+
+[node name="RunnerSpawn" parent="." index="1"]
+position = Vector2(0, -269)
+
 [node name="SawBlade" parent="." index="3" instance=ExtResource("2_tgslx")]
 position = Vector2(3.8147e-06, -1.90735e-06)
 scale = Vector2(6.6245, 6.6245)

@@ -12,9 +12,14 @@ var _team_dict = {Utils.Team.Chaser: [], Utils.Team.Runner: []}
 var _current_gamemode:Utils.GameMode = Utils.GameMode.Hunter
 var is_in_game = false
 
+var can_start_game = true
+
 
 func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
-	if event.is_action_pressed("ui_focus_next"):
+	if event.is_action_pressed("jump1") or event.is_action_pressed("jump2") or event.is_action_pressed("jump3") or event.is_action_pressed("jump4"):
+		if !can_start_game:
+			return
+		
 		if PlayerManager.is_empty():
 			PlayerManager.add_player(1,3)
 			PlayerManager.add_player(2,2)
@@ -25,6 +30,7 @@ func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
 
 
 func start_game():
+	can_start_game = false
 	#TODO inladen van UI en characters op basis van de gekozen spelers
 	print("%s: Starting game" % name)
 	# Reset alle in-game-bepaalde waarden
@@ -173,7 +179,7 @@ func _end_turn():
 func _end_game():
 	#TODO end game. show score. show total time. Options: menu, again
 	PlayerManager.toggle_all_players(false)
-	
+	%StartGameTimer.start()
 	%TimerManager.display_end_scores()
 	%EndScreen.visible = true
 
@@ -184,3 +190,8 @@ func restart_game():
 
 func _wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
+
+
+# op het einde van het spel wordt een timer gestart zodat je niet meteen misclickt en het spel eindigt
+func _on_start_game_timer_timeout() -> void:
+	can_start_game = true
