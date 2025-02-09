@@ -21,8 +21,10 @@ func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
 			return
 		
 		if PlayerManager.is_empty():
-			PlayerManager.add_player(1,3)
+			PlayerManager.add_player(1,1)
 			PlayerManager.add_player(2,2)
+			PlayerManager.add_player(3,3)
+			PlayerManager.add_player(4,4)
 			_chosen_players = PlayerManager.player_dict.keys()
 		else:
 			_chosen_players = PlayerManager.player_dict.keys()
@@ -75,12 +77,13 @@ func _next_turn():
 	get_tree().paused = true
 	%TurnIndicator.set_players(_turn_order,_turn_count)
 	%IngameUIManager.set_turn_ui(true, _round_count ,_turn_count)
-	await _wait(1)
+	await _wait(2)
 	%IngameUIManager.set_turn_ui(false)
 	get_tree().paused = false
 	
 	
 	var chosen_id = _turn_order[_turn_count-1]
+
 	
 	# Enkel de Hunter gamemode for now
 	_team_dict[Utils.Team.Chaser].append(chosen_id)
@@ -147,7 +150,7 @@ func on_player_died(player_id):
 		printerr("%s: loser alert. Een chaser is gestorven? Bruh" % name)
 
 
-func _clear_turn(): # TODO Hier ook iets te doen met time? denkik?
+func _clear_turn(): # TODO Hier ook iets te doen met time? denkik? ... / geen idee what je hier bedoelt
 	_team_dict = {Utils.Team.Chaser: [], Utils.Team.Runner: []}
 
 
@@ -158,11 +161,12 @@ func _clear_round():
 func _on_round_timer_timeout() -> void:
 	for id in _team_dict[Utils.Team.Runner]:
 		%TimerManager.add_player_time(id, true)
-		%WinSound.play()
-		_end_turn()
+	%WinSound.play()
+	_end_turn()
 
 
 func _end_turn():
+	print("%s: Turn ended!" % name)
 	for id in _team_dict[Utils.Team.Runner]:
 		PlayerManager.get_player(id).win_round()
 	
