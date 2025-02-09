@@ -3,6 +3,7 @@ extends Node
 var _map_list = []
 const MAP_DIR = "res://spaces/maps/"
 var _current_map :BaseMap= null
+const MAPS = [1,2,3,4,5]
 
 
 func _ready() -> void:
@@ -10,11 +11,13 @@ func _ready() -> void:
 	for map in dir_access.get_files():
 		if map.ends_with(".tscn"):
 			_map_list.append(load(MAP_DIR + map))
+			print("%s: added map %s" % [self,load(MAP_DIR + map)])
 
 
 func generate_random_map():
 	_clear_map()
-	var new_map = _map_list.pick_random().instantiate()
+	var map_to_load = ResourceLoader.load("res://spaces/maps/map_%s.tscn" % MAPS.pick_random())
+	var new_map = map_to_load.instantiate()
 	%Map.add_child(new_map)
 	_current_map = new_map
 	
