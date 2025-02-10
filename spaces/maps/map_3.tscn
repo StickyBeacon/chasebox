@@ -7,27 +7,35 @@
 [node name="BaseMap" instance=ExtResource("1_2yhgn")]
 
 [node name="ChaserSpawn" parent="." index="0"]
-position = Vector2(0, 242)
+position = Vector2(192, 235)
 
 [node name="RunnerSpawn" parent="." index="1"]
-position = Vector2(0, -245)
+position = Vector2(-117, -170)
 
 [node name="Obstacle" parent="." index="3" instance=ExtResource("2_gxdil")]
-position = Vector2(0, 147)
-scale = Vector2(-6.89713, -1.07475)
+position = Vector2(199, 129)
+scale = Vector2(-3.39514, -1.18222)
 
-[node name="Obstacle2" parent="." index="4" instance=ExtResource("2_gxdil")]
-position = Vector2(0, -147)
-scale = Vector2(-6.89713, -1.07475)
+[node name="Obstacle4" parent="." index="4" instance=ExtResource("2_gxdil")]
+position = Vector2(-465, -44)
+scale = Vector2(2.71791, -2.06318)
 
-[node name="SawBlade" parent="." index="5" instance=ExtResource("3_pqc1m")]
-position = Vector2(-210, 96)
-scale = Vector2(3.79361, 3.79361)
+[node name="Obstacle5" parent="." index="5" instance=ExtResource("2_gxdil")]
+position = Vector2(-331, 189)
+scale = Vector2(2.00931, 0.88422)
 
-[node name="SawBlade2" parent="." index="6" instance=ExtResource("3_pqc1m")]
+[node name="Obstacle2" parent="." index="6" instance=ExtResource("2_gxdil")]
+position = Vector2(-116, -106)
+scale = Vector2(-1.483, -0.477667)
+
+[node name="Obstacle3" parent="." index="7" instance=ExtResource("2_gxdil")]
+position = Vector2(125, -104)
+scale = Vector2(-1.483, -0.477667)
+
+[node name="SawBlade" parent="." index="8" instance=ExtResource("3_pqc1m")]
+position = Vector2(195, 294)
+scale = Vector2(1.95523, 1.95523)
+
+[node name="SawBlade2" parent="." index="9" instance=ExtResource("3_pqc1m")]
 position = Vector2(0, -99)
-scale = Vector2(3.79361, 3.79361)
-
-[node name="SawBlade3" parent="." index="7" instance=ExtResource("3_pqc1m")]
-position = Vector2(210, 96)
 scale = Vector2(3.79361, 3.79361)

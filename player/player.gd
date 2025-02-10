@@ -111,7 +111,6 @@ func _kill_player():
 
 func recolor_sprites(color):
 	%JumpIndicator.modulate = color
-	%AimCursor.modulate = color
 	%ChaseSprite.modulate = color
 	%ChaseSprite.modulate.a = .3
 	%ChaseSprite2.modulate = color

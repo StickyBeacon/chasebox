@@ -248,7 +248,7 @@ offset_bottom = 231.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 56
-text = "Press shoot to join!"
+text = "Press [UP] to join!"
 horizontal_alignment = 1
 
 [connection signal="button_up" from="CanvasLayer/StartGame/BackButton" to="." method="change_menu" binds= [&"MainMenu"]]

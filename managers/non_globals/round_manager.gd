@@ -68,7 +68,6 @@ func _next_turn():
 	_clear_turn()
 	#Als alle turns voorbij zijn, begin nieuwe "ronde"
 	if _turn_count > _turn_order.size():
-		%TimerManager.calculate_round_points()
 		_turn_count = 0
 		_next_round()
 		return
@@ -155,7 +154,7 @@ func _clear_turn(): # TODO Hier ook iets te doen met time? denkik? ... / geen id
 
 
 func _clear_round():
-	%TimerManager.clear_round()
+	pass
 
 
 func _on_round_timer_timeout() -> void:

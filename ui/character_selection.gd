@@ -13,7 +13,7 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	for i in [1,2,3,4]:
-		if event.is_action_pressed("shoot%s" % i) and not i in current_controllers.keys():
+		if event.is_action_pressed("up%s" % i) and not i in current_controllers.keys():
 			current_controllers[i] = find_child("Card%s"%i)
 			current_controllers[i].set_active(true)
 

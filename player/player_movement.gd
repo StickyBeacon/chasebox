@@ -18,7 +18,7 @@ var _is_jump_held_in = false
 # Rounds coyote-walljump mechanic
 var _free_jump = false
 
-var input_dict = {"jump" = null,"shoot"= null,"left"= null,"right"= null,"up"= null,"down"= null}
+var input_dict = {"jump" = null,"left"= null,"right"= null,"up"= null,"down"= null}
 
 var can_move:bool = false
 

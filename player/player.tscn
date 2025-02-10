@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://ce8oxjeft3feq"]
+[gd_scene load_steps=63 format=3 uid="uid://ce8oxjeft3feq"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_bt2nw"]
 [ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="1_q0tl4"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://8t7m5pij44ai" path="res://assets/images/Queen/Air1.png" id="5_m4uwu"]
 [ext_resource type="Texture2D" uid="uid://cd6vopmwi1kyh" path="res://assets/images/Queen/Idle2.png" id="6_4e5a3"]
 [ext_resource type="Texture2D" uid="uid://bi2aq251gc8hy" path="res://assets/images/Queen/Air2.png" id="6_41fis"]
-[ext_resource type="Texture2D" uid="uid://lkw46275p7g8" path="res://assets/images/arrow.png" id="6_rluxf"]
 [ext_resource type="Texture2D" uid="uid://c1d467ncfvcvq" path="res://assets/images/jumpPlatform.png" id="7_h4bhr"]
 [ext_resource type="Texture2D" uid="uid://bnlg07teg28eq" path="res://assets/images/wheel.png" id="8_ff2o0"]
 [ext_resource type="Texture2D" uid="uid://fdxc10t3fxvv" path="res://assets/images/Queen/Jump1.png" id="9_cwxh1"]
@@ -365,17 +364,6 @@ script = ExtResource("5_hwcfy")
 unique_name_in_owner = true
 wait_time = 0.1
 one_shot = true
-
-[node name="AimCursor" type="Node2D" parent="."]
-unique_name_in_owner = true
-
-[node name="Sprite2D2" type="Sprite2D" parent="AimCursor"]
-z_index = 20
-texture_filter = 1
-position = Vector2(57, 0)
-rotation = -1.5708
-scale = Vector2(0.596476, 0.596476)
-texture = ExtResource("6_rluxf")
 
 [node name="JumpIndicator" type="Sprite2D" parent="."]
 unique_name_in_owner = true

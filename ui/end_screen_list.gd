@@ -14,4 +14,4 @@ func set_players(order:Array, time_dict):
 		current_icons.append(icon)
 		icon.modulate = Color(1,1,1)
 		
-		icon.get_child(0).text = "Time: %.2f" % time_dict[order[i]]
+		icon.get_child(0).text = "%.2f" % time_dict[order[i]]
