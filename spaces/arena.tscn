@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://gu2dwpe4sb72"]
+[gd_scene load_steps=27 format=3 uid="uid://gu2dwpe4sb72"]
 
 [ext_resource type="Script" path="res://managers/non_globals/timer_manager.gd" id="1_7i13x"]
 [ext_resource type="Shader" path="res://shaders/repeat_shader.gdshader" id="1_47ug3"]
@@ -16,7 +16,9 @@
 [ext_resource type="AudioStream" uid="uid://ddfqnpw6xfyb4" path="res://assets/audio/partyhorn.wav" id="8_rvxqc"]
 [ext_resource type="AudioStream" uid="uid://7g2wucq3p1uk" path="res://assets/audio/loading.wav" id="9_2t268"]
 [ext_resource type="AudioStream" uid="uid://cn615k5ssn7ex" path="res://assets/audio/startnewRound.wav" id="10_2jgrn"]
+[ext_resource type="AudioStream" uid="uid://ey7sovlym2lj" path="res://assets/audio/newmap.wav" id="11_q5103"]
 [ext_resource type="PackedScene" uid="uid://dbog3t23i0am4" path="res://spawnables/obstacle.tscn" id="13_qreh3"]
+[ext_resource type="AudioStream" uid="uid://kt82u2k4grg8" path="res://assets/music/ost1.wav" id="19_n8vga"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a6rtk"]
 resource_local_to_scene = true
@@ -34,7 +36,21 @@ random_pitch = 1.2
 streams_count = 1
 stream_0/stream = ExtResource("8_rvxqc")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wcdtx"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("10_2jgrn")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vh0ir"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("11_q5103")
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_di7i8"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wx3p7"]
+streams_count = 1
+stream_0/stream = ExtResource("19_n8vga")
 
 [node name="Arena" type="Node2D"]
 
@@ -94,13 +110,13 @@ volume_db = -10.0
 
 [node name="NewTurn" type="AudioStreamPlayer" parent="Managers/RoundManager"]
 unique_name_in_owner = true
-stream = ExtResource("10_2jgrn")
+stream = SubResource("AudioStreamRandomizer_wcdtx")
 volume_db = -25.0
 pitch_scale = 0.8
 
 [node name="NewRound" type="AudioStreamPlayer" parent="Managers/RoundManager"]
 unique_name_in_owner = true
-stream = ExtResource("10_2jgrn")
+stream = SubResource("AudioStreamRandomizer_vh0ir")
 volume_db = -25.0
 
 [node name="IngameUIManager" type="Node" parent="Managers"]
@@ -352,6 +368,13 @@ scale = Vector2(19.2926, 9.62764)
 [node name="Obstacle4" parent="." instance=ExtResource("13_qreh3")]
 position = Vector2(-70, 755)
 scale = Vector2(19.2926, 9.62764)
+
+[node name="BGMusic" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+stream = SubResource("AudioStreamRandomizer_wx3p7")
+volume_db = -10.0
+bus = &"Music"
 
 [connection signal="timeout" from="Managers/TimerManager/ActualTimer" to="Managers/RoundManager" method="_on_round_timer_timeout"]
 [connection signal="timeout" from="Managers/RoundManager/StartGameTimer" to="Managers/RoundManager" method="_on_start_game_timer_timeout"]

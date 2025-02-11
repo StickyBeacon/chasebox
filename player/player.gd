@@ -38,6 +38,8 @@ class_name Player
 		var _is_chaser = true if value == Utils.Team.Chaser else false
 		%ChaseHitbox.set_deferred("monitoring",_is_chaser)
 		%ChaseHitbox.set_deferred("visible",_is_chaser) 
+		%ChaseSprite2.set_deferred("visible",_is_chaser) 
+
 
 @export var enabled :bool = false:
 	set(value):
@@ -111,10 +113,10 @@ func _kill_player():
 
 func recolor_sprites(color):
 	%JumpIndicator.modulate = color
-	%ChaseSprite.modulate = color
-	%ChaseSprite.modulate.a = .3
+	#%ChaseSprite.modulate = color
+	%ChaseSprite.modulate.a = .8
 	%ChaseSprite2.modulate = color
-	%ChaseSprite2.modulate.a = .05
+	%ChaseSprite2.modulate.a = .3
 
 
 func repitch_audio(value):

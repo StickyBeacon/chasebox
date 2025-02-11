@@ -24,8 +24,8 @@ func _input(event: InputEvent) -> void: #TODO temporary match start shortcut
 		if PlayerManager.is_empty():
 			PlayerManager.add_player(1,1)
 			PlayerManager.add_player(2,2)
-			PlayerManager.add_player(3,3)
-			PlayerManager.add_player(4,4)
+			#PlayerManager.add_player(3,3)
+			#PlayerManager.add_player(4,4)
 			_chosen_players = PlayerManager.player_dict.keys()
 		else:
 			_chosen_players = PlayerManager.player_dict.keys()
@@ -43,6 +43,8 @@ func start_game():
 	# Shuffle turn order voor dit spel
 	_turn_order = _chosen_players.duplicate()
 	_turn_order.shuffle()
+	%BGMusic.stop()
+	%BGMusic.play()
 	_next_round()
 
 

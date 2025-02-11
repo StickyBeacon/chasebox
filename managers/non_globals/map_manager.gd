@@ -13,7 +13,7 @@ func _ready() -> void:
 
 func generate_random_map():
 	_clear_map()
-	
+	"res://assets/audio/newmap.wav"
 	if _current_maps.is_empty():
 		set_maps(_chosen_maps)
 	
@@ -24,7 +24,7 @@ func generate_random_map():
 	%Map.add_child(new_map)
 	_current_map = new_map
 	_current_maps.erase(_current_map_id)
-
+	%TraumaManager.add_trauma(2)
 
 func spawn_players(team_dict):
 	for id in team_dict[Utils.Team.Chaser] + team_dict[Utils.Team.Runner]:

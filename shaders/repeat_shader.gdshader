@@ -23,5 +23,7 @@ void fragment() {
 	
 	COLOR.rgba = texture(TEXTURE, uv).rgba;
 	
+	//COLOR = COLOR*modulate;
+	
 }
 
