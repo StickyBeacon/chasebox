@@ -10,22 +10,22 @@ class_name Player
 	set(value):
 		match(value): 
 			1:
-				%JumpSound.pitch_scale = .9
+				repitch_audio(1)
 				%AnimationManager.current_sprites = %WaveSprites
 				%WaveSprites.modulate = Color(1,0,0)
 				recolor_sprites(Color(1,0,0))
 			2:
-				%JumpSound.pitch_scale = 1.5
+				repitch_audio(2)
 				%AnimationManager.current_sprites = %BratSprites
 				%BratSprites.modulate = Color(0,1,0)
 				recolor_sprites(Color(0,1,0))
 			3:
-				%JumpSound.pitch_scale = 1.3
+				repitch_audio(1.5)
 				%AnimationManager.current_sprites = %QueenSprites
 				%QueenSprites.modulate = Color(0,0,1)
 				recolor_sprites(Color(0,0,1))
 			4:
-				%JumpSound.pitch_scale = 0.75
+				repitch_audio(.66)
 				%AnimationManager.current_sprites = %JuliettSprites
 				%JuliettSprites.modulate = Color(1,1,0)
 				recolor_sprites(Color(1,1,0))
@@ -115,6 +115,10 @@ func recolor_sprites(color):
 	%ChaseSprite.modulate.a = .3
 	%ChaseSprite2.modulate = color
 	%ChaseSprite2.modulate.a = .05
+
+
+func repitch_audio(value):
+	%JumpSound.pitch_scale = value
 
 
 func win_round():

@@ -13,9 +13,9 @@ func _ready() -> void:
 		_input_dict[key] = key + str(player.controller_id)
 
 
-func _input(event: InputEvent) -> void: 
-	if event.is_action_pressed(_input_dict["up"]):
-		shoot()
+#func _input(event: InputEvent) -> void: #TODO uncomment dit voor abilitieyes
+	#if event.is_action_pressed(_input_dict["up"]):
+		#shoot()
 
 
 func _process(delta: float) -> void:

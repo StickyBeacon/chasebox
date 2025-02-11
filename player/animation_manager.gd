@@ -6,13 +6,17 @@ var current_sprites :AnimatedSprite2D = null:
 		value.visible = true
 		starting_scale = current_sprites.scale.x
 	
-@onready var player = $"../.."
+@onready var player :Player= $"../.."
 var previous_state = "Idle"
 var interruptable_dict = {"Idle":true,"Air":true,"Roll":false,"Run":true,"Wall":true,"Jump":false}
 const STRETCH_DIVIDER = 2000
 const ROTATE_DIVIDER = 2000
 var starting_scale = null
 var dust_particle = preload("res://spawnables/particles/dust.tscn")
+
+var _was_on_wall :bool = false
+var _was_on_ceiling :bool = false
+var _was_on_floor:bool = false
 
 
 func on_sprite_end():
@@ -25,6 +29,7 @@ func on_sprite_end():
 
 
 func _process(_delta: float) -> void:
+	# Player sprite shenanigans
 	if sign(player.velocity.x) != 0:
 		current_sprites.scale.x = float(sign(player.velocity.x)) 
 	
@@ -33,13 +38,35 @@ func _process(_delta: float) -> void:
 	current_sprites.scale.y = starting_scale + abs(player.velocity.y) / STRETCH_DIVIDER 
 	current_sprites.scale.x = sign(current_sprites.scale.x)*(starting_scale - abs(player.velocity.y) / STRETCH_DIVIDER) 
 	
+	# Player on wall/ceiling? particle time!
+	if player.is_on_wall() and !_was_on_wall:
+		spawn_dust()
+		%WallHitSound.play()
+		_was_on_wall = true
+	elif !player.is_on_wall():
+		_was_on_wall = false
+	
+	if player.is_on_ceiling_only() and !_was_on_ceiling:
+		spawn_dust(.5)
+		%CeilingHitSound.play()
+		_was_on_ceiling = true
+	elif !player.is_on_ceiling():
+		_was_on_ceiling = false
+	
+	if player.is_on_floor() and !_was_on_floor:
+		spawn_dust(.5)
+		%LandSound.play()
+		_was_on_floor = true
+	elif !player.is_on_floor():
+		_was_on_floor = false
+	#
+	#spawn_dust(.5)
+			#%LandSound.play()
 	
 	if !interruptable_dict[previous_state] : return
 	
 	if player.is_on_floor():
 		if previous_state == "Air":
-			spawn_dust()
-			%LandSound.play()
 			change_to_state("Roll")
 			return
 		
@@ -57,18 +84,19 @@ func _process(_delta: float) -> void:
 	change_to_state("Air")
 	
 	
+
+
 func change_to_state(state):
 	if previous_state == state: return
 	current_sprites.play(state)
 	previous_state = state
-	
-	if previous_state == "Wall":
-		spawn_dust()
-		%WallHitSound.play()
+	#Reset de wall particle (dit is veel meer satisfying)
+	if state == "Jump":
+		_was_on_wall = false
+		_was_on_ceiling = false
 
-
-func spawn_dust():
+func spawn_dust(lightness:float = 1):
 	var particle = dust_particle.instantiate()
+	particle.modulate = Color(%JumpIndicator.modulate.r*lightness,%JumpIndicator.modulate.g*lightness,%JumpIndicator.modulate.b*lightness)
 	particle.global_position = player.global_position + Vector2(0,0.5)
 	get_tree().root.add_child(particle)
-	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://ce8oxjeft3feq"]
+[gd_scene load_steps=65 format=3 uid="uid://ce8oxjeft3feq"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_bt2nw"]
 [ext_resource type="Texture2D" uid="uid://88dxptj35hph" path="res://icon.svg" id="1_q0tl4"]
@@ -52,6 +52,7 @@
 [ext_resource type="AudioStream" uid="uid://8k5tqgy1tpq6" path="res://assets/audio/spat.wav" id="51_saje4"]
 [ext_resource type="AudioStream" uid="uid://c5niu1r1ecsq" path="res://assets/audio/sawcut.wav" id="52_g4ct5"]
 [ext_resource type="AudioStream" uid="uid://36w1x2a153d" path="res://assets/audio/jump.wav" id="53_ge2md"]
+[ext_resource type="AudioStream" uid="uid://byapmdwq33n5l" path="res://assets/audio/ceilinghit.wav" id="53_yvdyo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wu2jy"]
 
@@ -330,6 +331,11 @@ random_pitch = 1.5
 streams_count = 1
 stream_0/stream = ExtResource("53_ge2md")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8u4ns"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("53_yvdyo")
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_bt2nw")
@@ -476,6 +482,10 @@ unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_oodqy")
 volume_db = -10.0
 max_distance = 100.0
+
+[node name="CeilingHitSound" type="AudioStreamPlayer2D" parent="Audio"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_8u4ns")
 
 [connection signal="timeout" from="Timers/JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
 [connection signal="body_entered" from="ChaseHitbox" to="." method="_on_chase_hitbox_body_entered"]

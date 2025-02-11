@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://gu2dwpe4sb72"]
+[gd_scene load_steps=22 format=3 uid="uid://gu2dwpe4sb72"]
 
 [ext_resource type="Script" path="res://managers/non_globals/timer_manager.gd" id="1_7i13x"]
 [ext_resource type="Shader" path="res://shaders/repeat_shader.gdshader" id="1_47ug3"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" path="res://managers/non_globals/pause_manager.gd" id="6_lksqt"]
 [ext_resource type="PackedScene" uid="uid://bum10leeftxjx" path="res://ui/end_screen_list.tscn" id="7_1q6bt"]
 [ext_resource type="AudioStream" uid="uid://ddfqnpw6xfyb4" path="res://assets/audio/partyhorn.wav" id="8_rvxqc"]
+[ext_resource type="AudioStream" uid="uid://7g2wucq3p1uk" path="res://assets/audio/loading.wav" id="9_2t268"]
+[ext_resource type="AudioStream" uid="uid://cn615k5ssn7ex" path="res://assets/audio/startnewRound.wav" id="10_2jgrn"]
 [ext_resource type="PackedScene" uid="uid://dbog3t23i0am4" path="res://spawnables/obstacle.tscn" id="13_qreh3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a6rtk"]
@@ -74,16 +76,32 @@ unique_name_in_owner = true
 process_mode = 3
 script = ExtResource("1_pny5p")
 
+[node name="StartGameTimer" type="Timer" parent="Managers/RoundManager"]
+unique_name_in_owner = true
+wait_time = 2.0
+one_shot = true
+
 [node name="WinSound" type="AudioStreamPlayer" parent="Managers/RoundManager"]
 unique_name_in_owner = true
 process_mode = 3
 stream = SubResource("AudioStreamRandomizer_raugb")
 volume_db = -15.0
 
-[node name="StartGameTimer" type="Timer" parent="Managers/RoundManager"]
+[node name="LoadingSound" type="AudioStreamPlayer" parent="Managers/RoundManager"]
 unique_name_in_owner = true
-wait_time = 2.0
-one_shot = true
+stream = ExtResource("9_2t268")
+volume_db = -10.0
+
+[node name="NewTurn" type="AudioStreamPlayer" parent="Managers/RoundManager"]
+unique_name_in_owner = true
+stream = ExtResource("10_2jgrn")
+volume_db = -25.0
+pitch_scale = 0.8
+
+[node name="NewRound" type="AudioStreamPlayer" parent="Managers/RoundManager"]
+unique_name_in_owner = true
+stream = ExtResource("10_2jgrn")
+volume_db = -25.0
 
 [node name="IngameUIManager" type="Node" parent="Managers"]
 unique_name_in_owner = true

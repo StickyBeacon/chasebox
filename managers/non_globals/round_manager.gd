@@ -11,6 +11,7 @@ var _chosen_players = []
 var _team_dict = {Utils.Team.Chaser: [], Utils.Team.Runner: []}
 var _current_gamemode:Utils.GameMode = Utils.GameMode.Hunter
 var is_in_game = false
+var pitch_array = [.66,1.33,1,.33]
 
 var can_start_game = true
 
@@ -46,6 +47,7 @@ func start_game():
 
 
 func _next_round():
+	%NewRound.play()
 	print("%s: next round" % name)
 	_round_count += 1
 	_clear_round()
@@ -62,6 +64,7 @@ func _next_round():
 	
 
 func _next_turn():
+	
 	_turn_count += 1
 	print("%s: turn %s round %s" % [name, _turn_count, _round_count])
 	PlayerManager.reset_players()
@@ -76,7 +79,11 @@ func _next_turn():
 	get_tree().paused = true
 	%TurnIndicator.set_players(_turn_order,_turn_count)
 	%IngameUIManager.set_turn_ui(true, _round_count ,_turn_count)
+	%LoadingSound.pitch_scale = pitch_array[_turn_order[_turn_count-1]-1]
+	%LoadingSound.play()
 	await _wait(2)
+	%LoadingSound.stop()
+	%NewTurn.play()
 	%IngameUIManager.set_turn_ui(false)
 	get_tree().paused = false
 	
