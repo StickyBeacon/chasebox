@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=3 uid="uid://cdn4j0eu0bhxm"]
+
+[ext_resource type="Texture2D" uid="uid://b156dnticgdp7" path="res://assets/images/bgtextures/ball.png" id="1_vppyk"]
+[ext_resource type="Texture2D" uid="uid://clmpcowxtrthk" path="res://assets/images/bgtextures/plus.png" id="2_f3rv3"]
+[ext_resource type="Texture2D" uid="uid://b5amwgqa7xtu6" path="res://assets/images/bgtextures/dust.png" id="3_qwafr"]
+
+[sub_resource type="Curve" id="Curve_o5ym5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveTexture" id="CurveTexture_8t4o6"]
+curve = SubResource("Curve_o5ym5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_41q2d"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(500, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_max = 247.31
+gravity = Vector3(0, -98, 0)
+scale_curve = SubResource("CurveTexture_8t4o6")
+sub_emitter_mode = 2
+sub_emitter_amount_at_end = 1
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mwu14"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 86.02
+initial_velocity_max = 220.43
+sub_emitter_mode = 2
+sub_emitter_amount_at_end = 1
+
+[sub_resource type="Curve" id="Curve_a8ah8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ymyr5"]
+curve = SubResource("Curve_a8ah8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_odlxo"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 123.66
+initial_velocity_max = 123.66
+gravity = Vector3(0, 200, 0)
+scale_min = 0.1
+scale_curve = SubResource("CurveTexture_ymyr5")
+
+[node name="BubbleParticle" type="GPUParticles2D"]
+process_mode = 3
+z_index = 200
+texture_filter = 1
+amount = 10
+sub_emitter = NodePath("PlusParticle")
+process_material = SubResource("ParticleProcessMaterial_41q2d")
+texture = ExtResource("1_vppyk")
+lifetime = 2.5
+visibility_rect = Rect2(-250, -500, 500, 500)
+
+[node name="PlusParticle" type="GPUParticles2D" parent="."]
+z_index = 200
+emitting = false
+amount = 4
+sub_emitter = NodePath("../DustParticle")
+process_material = SubResource("ParticleProcessMaterial_mwu14")
+texture = ExtResource("2_f3rv3")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+visibility_rect = Rect2(-100, -400, 200, 200)
+
+[node name="DustParticle" type="GPUParticles2D" parent="."]
+z_index = 200
+emitting = false
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_odlxo")
+texture = ExtResource("3_qwafr")
+one_shot = true
+explosiveness = 1.0
+visibility_rect = Rect2(-100, -400, 200, 200)
+trail_enabled = true

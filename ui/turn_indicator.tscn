@@ -23,21 +23,25 @@ alignment = 1
 script = ExtResource("1_ci6sr")
 
 [node name="1" type="TextureRect" parent="."]
+modulate = Color(1, 0.392157, 0.392157, 1)
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("1_5jyca")
 
 [node name="2" type="TextureRect" parent="."]
+modulate = Color(0.392157, 1, 0.392157, 1)
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("2_xnehc")
 
 [node name="3" type="TextureRect" parent="."]
+modulate = Color(0.392157, 0.392157, 1, 1)
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("3_ib3yg")
 
 [node name="4" type="TextureRect" parent="."]
+modulate = Color(1, 1, 0.392157, 1)
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("4_78wlx")

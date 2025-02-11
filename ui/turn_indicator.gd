@@ -12,6 +12,6 @@ func set_players(order:Array, turn_numb):
 		move_child(icon, i)
 		icon.visible = true
 		current_icons.append(icon)
-		icon.modulate = Color(.2,.2,.2)
+		icon.modulate.v = .2
 	
-	current_icons[turn_numb-1].modulate = Color(1,1,1)
+	current_icons[turn_numb-1].modulate.v = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://gu2dwpe4sb72"]
+[gd_scene load_steps=28 format=3 uid="uid://gu2dwpe4sb72"]
 
 [ext_resource type="Script" path="res://managers/non_globals/timer_manager.gd" id="1_7i13x"]
 [ext_resource type="Shader" path="res://shaders/repeat_shader.gdshader" id="1_47ug3"]
@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://7g2wucq3p1uk" path="res://assets/audio/loading.wav" id="9_2t268"]
 [ext_resource type="AudioStream" uid="uid://cn615k5ssn7ex" path="res://assets/audio/startnewRound.wav" id="10_2jgrn"]
 [ext_resource type="AudioStream" uid="uid://ey7sovlym2lj" path="res://assets/audio/newmap.wav" id="11_q5103"]
+[ext_resource type="PackedScene" uid="uid://cdn4j0eu0bhxm" path="res://spawnables/particles/bubble_particle.tscn" id="12_kea2r"]
 [ext_resource type="PackedScene" uid="uid://dbog3t23i0am4" path="res://spawnables/obstacle.tscn" id="13_qreh3"]
 [ext_resource type="AudioStream" uid="uid://kt82u2k4grg8" path="res://assets/music/ost1.wav" id="19_n8vga"]
 
@@ -53,6 +54,9 @@ streams_count = 1
 stream_0/stream = ExtResource("19_n8vga")
 
 [node name="Arena" type="Node2D"]
+
+[node name="BubbleParticle" parent="." instance=ExtResource("12_kea2r")]
+position = Vector2(0, 403)
 
 [node name="ArenaBG" type="Sprite2D" parent="."]
 z_index = -80
@@ -117,7 +121,7 @@ pitch_scale = 0.8
 [node name="NewRound" type="AudioStreamPlayer" parent="Managers/RoundManager"]
 unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_vh0ir")
-volume_db = -25.0
+volume_db = -15.0
 
 [node name="IngameUIManager" type="Node" parent="Managers"]
 unique_name_in_owner = true
