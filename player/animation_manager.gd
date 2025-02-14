@@ -59,9 +59,6 @@ func _process(_delta: float) -> void:
 		_was_on_floor = true
 	elif !player.is_on_floor():
 		_was_on_floor = false
-	#
-	#spawn_dust(.5)
-			#%LandSound.play()
 	
 	if !interruptable_dict[previous_state] : return
 	
@@ -83,8 +80,6 @@ func _process(_delta: float) -> void:
 
 	change_to_state("Air")
 	
-	
-
 
 func change_to_state(state):
 	if previous_state == state: return
@@ -94,6 +89,7 @@ func change_to_state(state):
 	if state == "Jump":
 		_was_on_wall = false
 		_was_on_ceiling = false
+
 
 func spawn_dust(lightness:float = 1):
 	var particle = dust_particle.instantiate()

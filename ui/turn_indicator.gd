@@ -6,7 +6,6 @@ func set_players(order:Array, turn_numb):
 	for child in get_children():
 		child.visible = false
 		
-	
 	for i in range(order.size()):
 		var icon :TextureRect= find_child(str(order[i]))
 		move_child(icon, i)

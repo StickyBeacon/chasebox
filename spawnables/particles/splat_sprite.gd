@@ -1,5 +1,6 @@
 extends Sprite2D
 
+
 func initialize(color, pos):
 	global_position = pos
 	modulate = color

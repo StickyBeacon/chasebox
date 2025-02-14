@@ -1,6 +1,5 @@
 extends Node
 
-
 var noise = FastNoiseLite.new()
 var noise_time = 0
 const NOISE_TIME_MULTIPLIER = 500

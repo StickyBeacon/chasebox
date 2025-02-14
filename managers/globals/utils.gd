@@ -11,7 +11,7 @@ enum GameMode {
 	Prey # 1 Runner, de rest chasers. De enge gamemode.
 }
 
-enum Handicap {
+enum Handicap { # Momenteel niet in gebruik! 
 	None,
 	Slowdown, # Chaser speed is dezelfde als die van runners
 	Speedup, # Hunter speed is een pak sneller dan die van runners

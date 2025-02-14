@@ -3,7 +3,7 @@ extends VBoxContainer
 @export var controller_id :int = -1 #TODO verander dit
 var active:bool = false
 
-var selectable_objects = ["PlayerIcon", "Handicap", "ReadyColor", "Quit", "Start"]
+var selectable_objects = ["PlayerIcon", "SawSize","Speed", "ReadyColor", "Quit", "Start"]
 var hover_index = 0:
 	set(value):
 		hover_index = posmod(value,selectable_objects.size())
@@ -14,25 +14,32 @@ var icon_scroll_index = 0:
 		icon_scroll_index = posmod(value,icon_dict.size())
 		%PlayerIcon.texture = icon_dict[icon_scroll_index]
 
-var handicap_scroll_index = 0:
+var saw_size_scroll_index = 0:
 	set(value):
-		handicap_scroll_index = posmod(value, handicap_dict.keys().size())
-		%HandiCapLabel.text = str(handicap_dict[handicap_scroll_index])
-var handicap_dict:Dictionary = {}
+		saw_size_scroll_index = posmod(value, saw_size_array.size())
+		%SawSizeLabel.text = str(saw_size_array[saw_size_scroll_index])
+var saw_size_array:Array = [1.0,1.5,2.0,3.0,0.1,0.25,0.5,0.75] 
+
+var speed_scroll_index = 0:
+	set(value):
+		speed_scroll_index = posmod(value, speed_array.size())
+		%SpeedLabel.text = str(speed_array[speed_scroll_index])
+var speed_array:Array = [1.15,1.30,1.5,1.75,2,0.5,0.75,0.80,0.85,0.90,0.95,1.0,1.05,1.1]
+
 var ready_to_play :bool= false
 var character_select:CharacterSelect = null
 
 var has_chosen_character = false
-var has_chosen_handicap = false
+var has_chosen_saw_size = false
+var has_chosen_speed = false
 
 
 func _ready() -> void:
 	%NameLabel.text = "Player %s" % controller_id
+	%SawSizeLabel.text = str(saw_size_array[saw_size_scroll_index])
+	%SpeedLabel.text = str(speed_array[speed_scroll_index])
 	character_select = get_parent() #TODO hihihihihihihi
 	visible = false
-	# Initialize Handicap dict.
-	for i in range(Utils.Handicap.keys().size()):
-		handicap_dict[i] = Utils.Handicap.keys()[i]
 	hover_to(selectable_objects[hover_index])
 
 
@@ -73,21 +80,33 @@ func activate(item):
 				character_select.deselect_character(controller_id)
 				has_chosen_character = false
 				%PlayerIcon.modulate = Color(1,1,1)
-		"Handicap":
+		"SawSize":
 			if ready_to_play: return
-			# choose handicap
-			if !has_chosen_handicap: 
-				character_select.choose_handicap(controller_id,handicap_scroll_index)
-				has_chosen_handicap = true
-				%Handicap.modulate = Color(1,1,0)
+			# choose sawsize
+			if !has_chosen_saw_size: 
+				character_select.choose_saw_size(controller_id,saw_size_array[saw_size_scroll_index])
+				has_chosen_saw_size = true
+				%SawSize.modulate = Color(1,1,0)
 			else:
-				character_select.choose_handicap(controller_id,Utils.Handicap.None)
-				has_chosen_handicap = false
-				%Handicap.modulate = Color(1,1,1)
+				character_select.choose_saw_size(controller_id,-1) # hahaha
+				has_chosen_saw_size = false
+				%SawSize.modulate = Color(1,1,1)
+			pass
+		"Speed":
+			if ready_to_play: return
+			# choose speed
+			if !has_chosen_speed: 
+				character_select.choose_speed(controller_id,speed_array[speed_scroll_index])
+				has_chosen_speed = true
+				%Speed.modulate = Color(1,1,0)
+			else:
+				character_select.choose_speed(controller_id,-1) # baaa
+				has_chosen_speed = false
+				%Speed.modulate = Color(1,1,1)
 			pass
 		"ReadyColor":
 			# ready/unready
-			if !has_chosen_character or !has_chosen_handicap: return
+			if !has_chosen_character or !has_chosen_saw_size or !has_chosen_speed: return
 			
 			ready_to_play = !ready_to_play
 			if (ready_to_play):
@@ -109,11 +128,11 @@ func activate(item):
 
 func hover_to(item_name):
 	for child in get_children():
-		child.modulate.a = 1 
+		child.modulate.v = .6
 	
 	var item = find_child(item_name)
 	if item:
-		item.modulate.a = .8
+		item.modulate.v = 1
 
 
 func scroll(item,dir:int):
@@ -122,9 +141,14 @@ func scroll(item,dir:int):
 			if has_chosen_character: return
 			icon_scroll_index += dir
 			
-		"Handicap":
-			if has_chosen_handicap: return
-			handicap_scroll_index += dir
+		"SawSize":
+			if has_chosen_saw_size: return
+			saw_size_scroll_index += dir
+			
+			pass
+		"Speed":
+			if has_chosen_speed: return
+			speed_scroll_index += dir
 			
 			pass
 		"ReadyColor":

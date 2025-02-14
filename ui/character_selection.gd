@@ -5,7 +5,8 @@ var current_controllers = {}
 @onready var menu = $"../.."
 var can_select = false
 var chosen_characters = {}
-var chosen_handicaps = {}
+var chosen_saw_sizes = {}
+var chosen_speeds = {}
 
 
 func _input(event: InputEvent) -> void:
@@ -51,7 +52,8 @@ func clear_everything():
 		card.set_active(false)
 	current_controllers.clear()
 	chosen_characters.clear()
-	chosen_handicaps.clear()
+	chosen_saw_sizes.clear()
+	chosen_speeds.clear()
 
 
 func choose_character(controller_id,character_id):
@@ -66,12 +68,18 @@ func deselect_character(controller_id):
 	chosen_characters.erase(controller_id)
 
 
-func choose_handicap(controller_id,handicap):
-	chosen_handicaps[controller_id] = handicap
+func choose_saw_size(controller_id,saw_size):
+	chosen_saw_sizes[controller_id] = saw_size
+
+
+func choose_speed(controller_id,speed):
+	chosen_speeds[controller_id] = speed
+	
 
 
 func add_characters():
 	for controller_id in chosen_characters.keys():
 		var character_id = chosen_characters[controller_id]
-		var handicap = chosen_handicaps[controller_id]
-		PlayerManager.add_player(controller_id,character_id,handicap)
+		var saw_size = chosen_saw_sizes[controller_id]
+		var speed = chosen_speeds[controller_id]
+		PlayerManager.add_player(controller_id,character_id,saw_size,speed)

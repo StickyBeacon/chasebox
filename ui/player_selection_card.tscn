@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bcgrom877b7oq"]
+[gd_scene load_steps=5 format=3 uid="uid://bcgrom877b7oq"]
 
 [ext_resource type="Script" path="res://ui/player_selection_card.gd" id="1_las40"]
 [ext_resource type="Texture2D" uid="uid://ch6g4bsnqf6vw" path="res://assets/images/WaveIcon.png" id="2_g8ygu"]
+[ext_resource type="Texture2D" uid="uid://bnlg07teg28eq" path="res://assets/images/wheel.png" id="3_kky2n"]
+[ext_resource type="Texture2D" uid="uid://lkw46275p7g8" path="res://assets/images/arrow.png" id="4_b0rwm"]
 
 [node name="PlayerSelectionCard" type="VBoxContainer"]
 offset_right = 150.0
@@ -37,13 +39,13 @@ custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 texture = ExtResource("2_g8ygu")
 
-[node name="Handicap" type="ColorRect" parent="."]
+[node name="SawSize" type="ColorRect" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 38.44)
 layout_mode = 2
 color = Color(0.190762, 0.190762, 0.190762, 1)
 
-[node name="HandiCapLabel" type="Label" parent="Handicap"]
+[node name="SawSizeLabel" type="Label" parent="SawSize"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -58,6 +60,39 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "None"
+
+[node name="SawSprite" type="Sprite2D" parent="SawSize"]
+position = Vector2(1, 19)
+scale = Vector2(0.44, 0.44)
+texture = ExtResource("3_kky2n")
+
+[node name="Speed" type="ColorRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 38.44)
+layout_mode = 2
+color = Color(0.190762, 0.190762, 0.190762, 1)
+
+[node name="SpeedLabel" type="Label" parent="Speed"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "None"
+
+[node name="SawSprite" type="Sprite2D" parent="Speed"]
+position = Vector2(1, 19)
+rotation = 1.57079
+scale = Vector2(1.04004, 1.04004)
+texture = ExtResource("4_b0rwm")
 
 [node name="ReadyColor" type="ColorRect" parent="."]
 unique_name_in_owner = true

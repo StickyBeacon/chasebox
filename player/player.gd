@@ -49,19 +49,6 @@ class_name Player
 		%ChaseCollision.set_deferred("disabled",!value)
 		visible = value
 
-var handicap:Utils.Handicap = Utils.Handicap.None:
-	set(value):
-		match(value):
-			Utils.Handicap.None: # Nothing
-				pass
-			Utils.Handicap.SmallerSaw:
-				%ChaseHitbox.scale *= .5
-			Utils.Handicap.BiggerSaw:
-				%ChaseHitbox.scale *= 1.5
-			Utils.Handicap.Slowdown:
-				%Movement.chaser_extra_speed = -80
-			Utils.Handicap.Speedup:
-				%Movement.chaser_extra_speed = 220
 
 var splat_particle = preload("res://spawnables/particles/splatter.tscn")
 var splat_sprite = preload("res://spawnables/particles/splat_sprite.tscn")
@@ -134,3 +121,11 @@ func win_round():
 	win_splat.rotation = randf_range(-PI/6,PI/6)
 	win_splat.modulate = %JumpIndicator.modulate #TODO bruhhh
 	get_tree().get_first_node_in_group("SplatContainer").add_child(win_splat)
+
+
+func mult_saw_size(value):
+	%ChaseHitbox.scale *= value
+	
+
+func mult_chaser_speed(value):
+	%Movement.chaser_extra_speed = %Movement.SPEED*(value-1)
