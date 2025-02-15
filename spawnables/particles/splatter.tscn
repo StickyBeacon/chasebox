@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ufw5x0gnv3uh"]
+[gd_scene load_steps=13 format=3 uid="uid://ufw5x0gnv3uh"]
 
 [ext_resource type="Texture2D" uid="uid://b5amwgqa7xtu6" path="res://assets/images/bgtextures/dust.png" id="1_i4qil"]
 [ext_resource type="Script" path="res://spawnables/particles/self_destruct.gd" id="2_cvos0"]
@@ -29,6 +29,38 @@ gravity = Vector3(0, 600, 0)
 scale_max = 4.0
 scale_curve = SubResource("CurveTexture_wadii")
 
+[sub_resource type="Curve" id="Curve_d2dk7"]
+max_value = 1.01
+_data = [Vector2(0, 1.01), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0wssy"]
+curve = SubResource("Curve_d2dk7")
+
+[sub_resource type="Curve" id="Curve_cpge7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.713333, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_bsv2n"]
+curve = SubResource("Curve_cpge7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f44r8"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+angle_curve = SubResource("CurveTexture_0wssy")
+spread = 180.0
+initial_velocity_min = 220.43
+initial_velocity_max = 543.01
+gravity = Vector3(0, 500, 0)
+scale_min = 0.2
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_bsv2n")
+collision_mode = 1
+collision_friction = 0.4
+collision_bounce = 0.5
+collision_use_scale = true
+
 [node name="Splatter" type="GPUParticles2D"]
 process_mode = 3
 texture_filter = 1
@@ -44,3 +76,15 @@ script = ExtResource("2_cvos0")
 wait_time = 5.0
 one_shot = true
 autostart = true
+
+[node name="PhysicsSplat" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 15
+process_material = SubResource("ParticleProcessMaterial_f44r8")
+texture = ExtResource("1_i4qil")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+script = ExtResource("2_cvos0")
+
+[node name="Timer" type="Timer" parent="PhysicsSplat"]
