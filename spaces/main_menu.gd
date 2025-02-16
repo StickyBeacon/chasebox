@@ -20,15 +20,22 @@ func _ready() -> void:
 
 
 func change_menu(node_name:StringName):
+	%TickSound.play()
+	%BGMusicDrums.volume_db = -80
+	%BGMusicChords.volume_db = -80
 	_current_ui = %CanvasLayer.find_child(node_name)
 	%CharacterSelection.clear_everything()
 	%CharacterSelection.can_select = false
 	if _current_ui == %CharacterSelection:
+		%BGMusicChords.volume_db = -10
+		%BGMusicDrums.volume_db = -10
 		%CharacterSelection.can_select = true
-	pass
-
+	elif _current_ui == %StartGame:
+		%BGMusicDrums.volume_db = -10
+ 
 
 func _on_quit_button_button_up() -> void:
+	%TickSound.play()
 	print("bai bai!")
 	get_tree().quit()
 

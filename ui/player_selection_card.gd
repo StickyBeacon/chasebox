@@ -70,6 +70,7 @@ func activate(item):
 		"PlayerIcon":
 			if ready_to_play: return
 			# claim player icon
+			%Select.play()
 			if !has_chosen_character: 
 				if character_select.choose_character(controller_id,icon_scroll_index+1):
 					has_chosen_character = true
@@ -83,6 +84,7 @@ func activate(item):
 		"SawSize":
 			if ready_to_play: return
 			# choose sawsize
+			%Select.play()
 			if !has_chosen_saw_size: 
 				character_select.choose_saw_size(controller_id,saw_size_array[saw_size_scroll_index])
 				has_chosen_saw_size = true
@@ -95,6 +97,7 @@ func activate(item):
 		"Speed":
 			if ready_to_play: return
 			# choose speed
+			%Select.play()
 			if !has_chosen_speed: 
 				character_select.choose_speed(controller_id,speed_array[speed_scroll_index])
 				has_chosen_speed = true
@@ -107,7 +110,7 @@ func activate(item):
 		"ReadyColor":
 			# ready/unready
 			if !has_chosen_character or !has_chosen_saw_size or !has_chosen_speed: return
-			
+			%Select.play()
 			ready_to_play = !ready_to_play
 			if (ready_to_play):
 				%ReadyColor.modulate = Color(0,1,0)
@@ -127,6 +130,7 @@ func activate(item):
 
 
 func hover_to(item_name):
+	%Move.play()
 	for child in get_children():
 		child.modulate.v = .6
 	
@@ -139,15 +143,18 @@ func scroll(item,dir:int):
 	match(item):
 		"PlayerIcon":
 			if has_chosen_character: return
+			%Move.play()
 			icon_scroll_index += dir
 			
 		"SawSize":
 			if has_chosen_saw_size: return
+			%Move.play()
 			saw_size_scroll_index += dir
 			
 			pass
 		"Speed":
 			if has_chosen_speed: return
+			%Move.play()
 			speed_scroll_index += dir
 			
 			pass

@@ -129,3 +129,7 @@ func mult_saw_size(value):
 
 func mult_chaser_speed(value):
 	%Movement.chaser_extra_speed = %Movement.SPEED*(value-1)
+
+
+func get_color():
+	return %JumpIndicator.modulate

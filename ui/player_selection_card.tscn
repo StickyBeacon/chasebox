@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://bcgrom877b7oq"]
+[gd_scene load_steps=9 format=3 uid="uid://bcgrom877b7oq"]
 
 [ext_resource type="Script" path="res://ui/player_selection_card.gd" id="1_las40"]
 [ext_resource type="Texture2D" uid="uid://ch6g4bsnqf6vw" path="res://assets/images/WaveIcon.png" id="2_g8ygu"]
 [ext_resource type="Texture2D" uid="uid://bnlg07teg28eq" path="res://assets/images/wheel.png" id="3_kky2n"]
 [ext_resource type="Texture2D" uid="uid://lkw46275p7g8" path="res://assets/images/arrow.png" id="4_b0rwm"]
+[ext_resource type="AudioStream" uid="uid://bis1mnjd3uw02" path="res://assets/audio/hover.wav" id="5_pwyyp"]
+[ext_resource type="AudioStream" uid="uid://x2u5s5bqhpsg" path="res://assets/audio/select.wav" id="6_tigjt"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ae4t2"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("5_pwyyp")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_mohbk"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("6_tigjt")
 
 [node name="PlayerSelectionCard" type="VBoxContainer"]
 offset_right = 150.0
@@ -158,3 +170,13 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Start"
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="Move" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_ae4t2")
+
+[node name="Select" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_mohbk")

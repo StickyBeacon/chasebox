@@ -45,6 +45,7 @@ func start_game():
 	_turn_order.shuffle()
 	%BGMusic.stop()
 	%BGMusic.play()
+	%BGMusic.pitch_scale = 1
 	_next_round()
 
 
@@ -81,6 +82,7 @@ func _next_turn():
 	get_tree().paused = true
 	%TurnIndicator.set_players(_turn_order,_turn_count)
 	%IngameUIManager.set_turn_ui(true, _round_count ,_turn_count)
+	%BGMusic.pitch_scale = randf_range(0.75,1.25)
 	%LoadingSound.pitch_scale = pitch_array[_turn_order[_turn_count-1]-1]
 	%LoadingSound.play()
 	await _wait(2)
@@ -88,9 +90,11 @@ func _next_turn():
 	%NewTurn.play()
 	%IngameUIManager.set_turn_ui(false)
 	get_tree().paused = false
+	%BGMusic.pitch_scale = 1
 	
 	
 	var chosen_id = _turn_order[_turn_count-1]
+	%BubbleParticle.modulate = PlayerManager.get_player(chosen_id).get_color()
 
 	
 	# Enkel de Hunter gamemode for now
@@ -174,6 +178,7 @@ func _on_round_timer_timeout() -> void:
 
 
 func _end_turn():
+	%BubbleParticle.modulate = Color.WHITE
 	print("%s: Turn ended!" % name)
 	for id in _team_dict[Utils.Team.Runner]:
 		PlayerManager.get_player(id).win_round()
@@ -190,6 +195,7 @@ func _end_turn():
 
 func _end_game():
 	#TODO end game. show score. show total time. Options: menu, again
+	%BGMusic.pitch_scale = 0.8
 	PlayerManager.toggle_all_players(false)
 	%StartGameTimer.start()
 	%TimerManager.display_end_scores()

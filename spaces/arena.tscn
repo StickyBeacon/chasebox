@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://gu2dwpe4sb72"]
+[gd_scene load_steps=30 format=3 uid="uid://gu2dwpe4sb72"]
 
 [ext_resource type="Script" path="res://managers/non_globals/timer_manager.gd" id="1_7i13x"]
 [ext_resource type="Shader" path="res://shaders/repeat_shader.gdshader" id="1_47ug3"]
@@ -20,6 +20,8 @@
 [ext_resource type="PackedScene" uid="uid://cdn4j0eu0bhxm" path="res://spawnables/particles/bubble_particle.tscn" id="12_kea2r"]
 [ext_resource type="PackedScene" uid="uid://dbog3t23i0am4" path="res://spawnables/obstacle.tscn" id="13_qreh3"]
 [ext_resource type="AudioStream" uid="uid://kt82u2k4grg8" path="res://assets/music/ost1.wav" id="19_n8vga"]
+[ext_resource type="AudioStream" uid="uid://budnep42rp0hr" path="res://assets/music/ost2.wav" id="21_xu3rq"]
+[ext_resource type="AudioStream" uid="uid://hk6o7hd18qbl" path="res://assets/music/ost3.wav" id="22_01wp6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a6rtk"]
 resource_local_to_scene = true
@@ -50,12 +52,15 @@ stream_0/stream = ExtResource("11_q5103")
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_di7i8"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wx3p7"]
-streams_count = 1
+streams_count = 3
 stream_0/stream = ExtResource("19_n8vga")
+stream_1/stream = ExtResource("21_xu3rq")
+stream_2/stream = ExtResource("22_01wp6")
 
 [node name="Arena" type="Node2D"]
 
 [node name="BubbleParticle" parent="." instance=ExtResource("12_kea2r")]
+unique_name_in_owner = true
 position = Vector2(0, 403)
 
 [node name="ArenaBG" type="Sprite2D" parent="."]

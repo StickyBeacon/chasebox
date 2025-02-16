@@ -30,7 +30,7 @@ func clear_players():
 	player_dict = {}
 
 
-func get_player(id):
+func get_player(id) -> Player:
 	if not id in player_dict.keys():
 		printerr("%s: %s niet in playerdict" % [name, id])
 		return null

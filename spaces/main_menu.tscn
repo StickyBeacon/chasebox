@@ -1,8 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://52rj3hhib524"]
+[gd_scene load_steps=9 format=3 uid="uid://52rj3hhib524"]
 
 [ext_resource type="Script" path="res://spaces/main_menu.gd" id="1_jiwr8"]
 [ext_resource type="Script" path="res://ui/character_selection.gd" id="2_ovsai"]
 [ext_resource type="PackedScene" uid="uid://bcgrom877b7oq" path="res://ui/player_selection_card.tscn" id="3_k68ey"]
+[ext_resource type="AudioStream" uid="uid://dp13xh6xd1sla" path="res://assets/music/ost4basic.wav" id="4_relip"]
+[ext_resource type="AudioStream" uid="uid://clsog0vl3j8i0" path="res://assets/music/ost4drums.wav" id="5_jwf7i"]
+[ext_resource type="AudioStream" uid="uid://bc2dasf7iqybh" path="res://assets/music/ost4chords.wav" id="6_vvnql"]
+[ext_resource type="AudioStream" uid="uid://x2u5s5bqhpsg" path="res://assets/audio/select.wav" id="7_uik7j"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3q35w"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("7_uik7j")
 
 [node name="Menu" type="Node2D"]
 script = ExtResource("1_jiwr8")
@@ -250,6 +259,28 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 56
 text = "Press [UP] to join!"
 horizontal_alignment = 1
+
+[node name="BGMusicBasic" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_relip")
+volume_db = -10.0
+autoplay = true
+
+[node name="BGMusicDrums" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_jwf7i")
+volume_db = -80.0
+autoplay = true
+
+[node name="BGMusicChords" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("6_vvnql")
+volume_db = -80.0
+autoplay = true
+
+[node name="TickSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_3q35w")
 
 [connection signal="button_up" from="CanvasLayer/StartGame/BackButton" to="." method="change_menu" binds= [&"MainMenu"]]
 [connection signal="button_up" from="CanvasLayer/StartGame/StartButton" to="." method="change_menu" binds= [&"CharacterSelection"]]
